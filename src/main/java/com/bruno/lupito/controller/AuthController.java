@@ -2,12 +2,16 @@ package com.bruno.lupito.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bruno.lupito.config.TokenConfig;
 import com.bruno.lupito.dto.request.LoginRequest;
 import com.bruno.lupito.dto.request.RegisterUserRequest;
 import com.bruno.lupito.dto.response.LoginResponse;
@@ -23,15 +27,25 @@ public class AuthController {
 
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final AuthenticationManager authenticationManager;
+	private final TokenConfig tokenConfig;
 	
-	public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+	public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenConfig tokenConfig) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.authenticationManager = authenticationManager;
+		this.tokenConfig = tokenConfig;
 	}
 	
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request){
-		return null;
+		
+		UsernamePasswordAuthenticationToken userAndPassword = new UsernamePasswordAuthenticationToken(request.email(), request.password());
+		Authentication authentication = authenticationManager.authenticate(userAndPassword);
+		
+		User user = (User) authentication.getPrincipal();
+		String token = tokenConfig.generateToken(user);
+		return ResponseEntity.ok(new LoginResponse(token));
 	}
 	
 	public ResponseEntity<RegisterUserResponse> register(@Valid @RequestBody RegisterUserRequest request){
