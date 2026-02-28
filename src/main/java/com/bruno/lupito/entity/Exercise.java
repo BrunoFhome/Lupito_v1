@@ -3,6 +3,8 @@ package com.bruno.lupito.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +29,8 @@ public class Exercise {
     private String question;
 
     @ElementCollection
+    @CollectionTable(name = "tb_exercises_options", joinColumns = @JoinColumn(name = "exercise_id"))
+    @Column(name = "options")
     private List<String> options = new ArrayList<>();
 
     private Integer correctAnswer;

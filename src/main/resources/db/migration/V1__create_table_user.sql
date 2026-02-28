@@ -1,4 +1,4 @@
-CREATE TABLE users(
+CREATE TABLE tb_users(
 	id serial PRIMARY KEY,
 	name varchar(255),
 	email varchar(255),
