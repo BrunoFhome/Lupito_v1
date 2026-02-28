@@ -17,23 +17,21 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "users")
+@Table(name = "tb_users")
 public class User implements UserDetails {
 
-	
-
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String email;
 	private String password;
-	
+
 	public User() {
 	}
-	
+
 	public User(Long id, String name, String email, String password) {
 		super();
 		this.id = id;
@@ -41,7 +39,6 @@ public class User implements UserDetails {
 		this.email = email;
 		this.password = password;
 	}
-
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -52,27 +49,25 @@ public class User implements UserDetails {
 	public String getUsername() {
 		return "";
 	}
-	
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean isEnabled() {
 		return true;
 	}
-	
-	
-	
+
 }
