@@ -1,8 +1,10 @@
 package com.bruno.lupito.entity;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,25 +22,31 @@ import lombok.Setter;
 @Table(name = "tb_users")
 public class User implements UserDetails {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String name;
-	private String email;
-	private String password;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String email;
+    private String password;
+    
+    private String bio;
 
-	public User() {
-	}
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-	public User(Long id, String name, String email, String password) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-	}
+    public User() {
+    }
+
+	public User(Long id, String name, String email, String password, String bio) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.bio = bio;
+    }
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -47,7 +55,7 @@ public class User implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return "";
+		return email;
 	}
 
 	@Override
