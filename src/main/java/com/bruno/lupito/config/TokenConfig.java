@@ -19,14 +19,22 @@ public class TokenConfig {
 	
 	public String generateToken(User user) {
 		
-		Algorithm algorithm = Algorithm.HMAC256(secret);
-		
-		return JWT.create()
-				.withClaim("userId", user.getId())
-				.withSubject(user.getEmail())
-				.withExpiresAt(Instant.now().plusSeconds(86400))
-				.withIssuedAt(Instant.now())
-				.sign(algorithm);
+		try {
+			Algorithm algorithm = Algorithm.HMAC256(secret);
+			
+			return JWT.create()
+					.withIssuer("Lupito")
+					.withClaim("userId", user.getId())
+					.withSubject(user.getName()) // Using Name as Subject might differ from Email used elsewhere? Usually Subject is username/email
+					// Wait, let's keep it consistent. Start with Email as Subject if that's what we want.
+					// Original code: .withSubject(user.getEmail())
+					.withSubject(user.getEmail())
+					.withExpiresAt(Instant.now().plusSeconds(86400))
+					.withIssuedAt(Instant.now())
+					.sign(algorithm);
+		} catch (Exception e) {
+			throw new RuntimeException("Error while authenticating");
+		}
 	}
 
 
@@ -37,6 +45,7 @@ public class TokenConfig {
 			Algorithm algorithm = Algorithm.HMAC256(secret);
 			
 			DecodedJWT decode = JWT.require(algorithm)
+					.withIssuer("Lupito")
 					.build().verify(token);
 			
 			return Optional.of(JWTUserData.builder()
@@ -45,6 +54,7 @@ public class TokenConfig {
 					.build());
 			
 		} catch (JWTVerificationException e) {
+			// e.printStackTrace(); // Helpful for debugging
 			return Optional.empty();
 		}
 		
