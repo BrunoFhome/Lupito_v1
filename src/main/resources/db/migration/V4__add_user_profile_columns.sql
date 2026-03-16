@@ -1,5 +1,5 @@
 
--- Delete duplicates, keeping the one with the highest ID
+
 DELETE FROM tb_users a USING tb_users b
 WHERE a.id < b.id AND a.email = b.email;
 
