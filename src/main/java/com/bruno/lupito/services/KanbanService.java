@@ -1,0 +1,75 @@
+package com.bruno.lupito.services;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bruno.lupito.dto.KanbanTaskDTO;
+import com.bruno.lupito.entity.KanbanTask;
+import com.bruno.lupito.entity.KanbanTemplate;
+import com.bruno.lupito.entity.User;
+import com.bruno.lupito.repository.KanbanTaskRepository;
+import com.bruno.lupito.repository.KanbanTemplateRepository;
+import com.bruno.lupito.repository.UserRepository;
+
+@Service
+public class KanbanService {
+
+    @Autowired
+    private KanbanTaskRepository taskRepository;
+
+    @Autowired
+    private KanbanTemplateRepository templateRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public void syncTasksForUser(User user) {
+        Integer progress = user.getLearningProgress() != null ? user.getLearningProgress() : 0;
+        
+        List<KanbanTemplate> templates = templateRepository.findAll();
+        for (KanbanTemplate template : templates) {
+            Long lessonId = template.getLesson().getId();
+            if (lessonId <= (progress + 1)) {
+                if (!taskRepository.existsByUserIdAndLessonId(user.getId(), lessonId)) {
+                    KanbanTask newTask = new KanbanTask();
+                    newTask.setUser(user);
+                    newTask.setLesson(template.getLesson());
+                    newTask.setTitle(template.getTitle());
+                    newTask.setDescription(template.getDescription());
+                    newTask.setPriority(template.getPriority());
+                    newTask.setAssignee("Você");
+                    newTask.setStatus("todo");
+                    taskRepository.save(newTask);
+                }
+            }
+        }
+    }
+
+    public List<KanbanTaskDTO> getTasksForUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        syncTasksForUser(user);
+
+        return taskRepository.findByUserId(userId).stream()
+                .map(KanbanTaskDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public void unlockTaskForLesson(Long userId, Long lessonId) {
+        // Redundant explicit unlock via route can still work
+        User user = userRepository.findById(userId).orElseThrow();
+        syncTasksForUser(user);
+    }
+
+    public KanbanTaskDTO updateTaskStatus(Long taskId, String newStatus, Long userId) {
+        KanbanTask task = taskRepository.findById(taskId).orElseThrow();
+        if (!task.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Unauthorized");
+        }
+        task.setStatus(newStatus);
+        task = taskRepository.save(task);
+        return new KanbanTaskDTO(task);
+    }
+}
