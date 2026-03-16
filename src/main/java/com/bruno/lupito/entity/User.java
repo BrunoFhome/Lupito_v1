@@ -33,19 +33,22 @@ public class User implements UserDetails {
     
     private String bio;
 
+    private Integer learningProgress;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     public User() {
     }
 
-	public User(Long id, String name, String email, String password, String bio) {
+	public User(Long id, String name, String email, String password, String bio, Integer learningProgress) {
         super();
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.bio = bio;
+        this.learningProgress = learningProgress != null ? learningProgress : 0;
     }
 
 	@Override
@@ -79,3 +82,4 @@ public class User implements UserDetails {
 	}
 
 }
+
