@@ -1,0 +1,39 @@
+package com.bruno.lupito.controller;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+
+import com.bruno.lupito.dto.KanbanTaskDTO;
+import com.bruno.lupito.entity.User;
+import com.bruno.lupito.services.KanbanService;
+
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+@RestController
+@RequestMapping("/api/kanban")
+public class KanbanController {
+
+    @Autowired
+    private KanbanService kanbanService;
+
+    @GetMapping("/tasks")
+    public ResponseEntity<List<KanbanTaskDTO>> getTasks(Authentication auth) {
+        User user = (User) auth.getPrincipal();
+        return ResponseEntity.ok(kanbanService.getTasksForUser(user.getId()));
+    }
+
+    @PostMapping("/tasks/unlock/{lessonId}")
+    public ResponseEntity<Void> unlockTask(@PathVariable Long lessonId, Authentication auth) {
+        User user = (User) auth.getPrincipal();
+        kanbanService.unlockTaskForLesson(user.getId(), lessonId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/tasks/{taskId}/status")
+    public ResponseEntity<KanbanTaskDTO> updateTaskStatus(@PathVariable Long taskId, @RequestParam String status, Authentication auth) {
+        User user = (User) auth.getPrincipal();
+        return ResponseEntity.ok(kanbanService.updateTaskStatus(taskId, status, user.getId()));
+    }
+}
