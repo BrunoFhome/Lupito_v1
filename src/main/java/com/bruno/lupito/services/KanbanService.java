@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bruno.lupito.dto.KanbanTaskDTO;
 import com.bruno.lupito.entity.KanbanTask;
@@ -26,6 +27,7 @@ public class KanbanService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public void syncTasksForUser(User user) {
         Integer progress = user.getLearningProgress() != null ? user.getLearningProgress() : 0;
         
@@ -48,6 +50,7 @@ public class KanbanService {
         }
     }
 
+    @Transactional
     public List<KanbanTaskDTO> getTasksForUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow();
         syncTasksForUser(user);
@@ -57,12 +60,14 @@ public class KanbanService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void unlockTaskForLesson(Long userId, Long lessonId) {
         // Redundant explicit unlock via route can still work
         User user = userRepository.findById(userId).orElseThrow();
         syncTasksForUser(user);
     }
 
+    @Transactional
     public KanbanTaskDTO updateTaskStatus(Long taskId, String newStatus, Long userId) {
         KanbanTask task = taskRepository.findById(taskId).orElseThrow();
         if (!task.getUser().getId().equals(userId)) {
@@ -73,3 +78,4 @@ public class KanbanService {
         return new KanbanTaskDTO(task);
     }
 }
+
