@@ -1,6 +1,7 @@
 package com.bruno.lupito.controller;
 
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -35,5 +36,12 @@ public class KanbanController {
     public ResponseEntity<KanbanTaskDTO> updateTaskStatus(@PathVariable Long taskId, @RequestParam String status, Authentication auth) {
         JWTUserData userData = (JWTUserData) auth.getPrincipal();
         return ResponseEntity.ok(kanbanService.updateTaskStatus(taskId, status, userData.userId()));
+    }
+
+    @PutMapping("/tasks/{taskId}/code")
+    public ResponseEntity<Void> saveCode(@PathVariable Long taskId, @RequestBody Map<String, String> body, Authentication auth) {
+        JWTUserData userData = (JWTUserData) auth.getPrincipal();
+        kanbanService.saveUserCode(taskId, body.get("code"), userData.userId());
+        return ResponseEntity.ok().build();
     }
 }

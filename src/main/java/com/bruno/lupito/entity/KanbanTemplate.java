@@ -18,6 +18,12 @@ public class KanbanTemplate {
     private String description;
     private String priority;
 
+    @jakarta.persistence.Column(name = "challenge_instructions", columnDefinition = "TEXT")
+    private String challengeInstructions;
+
+    @jakarta.persistence.Column(name = "starter_code", columnDefinition = "TEXT")
+    private String starterCode;
+
     @ManyToOne
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
@@ -34,4 +40,10 @@ public class KanbanTemplate {
     public void setPriority(String priority) { this.priority = priority; }
     public Lesson getLesson() { return lesson; }
     public void setLesson(Lesson lesson) { this.lesson = lesson; }
+
+    public String getChallengeInstructions() { return challengeInstructions; }
+    public void setChallengeInstructions(String challengeInstructions) { this.challengeInstructions = challengeInstructions; }
+
+    public String getStarterCode() { return starterCode; }
+    public void setStarterCode(String starterCode) { this.starterCode = starterCode; }
 }

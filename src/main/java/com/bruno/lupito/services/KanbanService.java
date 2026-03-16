@@ -34,7 +34,7 @@ public class KanbanService {
         List<KanbanTemplate> templates = templateRepository.findAll();
         for (KanbanTemplate template : templates) {
             Long lessonId = template.getLesson().getId();
-            if (lessonId <= (progress + 1)) {
+            if (lessonId <= progress) {
                 if (!taskRepository.existsByUserIdAndLessonId(user.getId(), lessonId)) {
                     KanbanTask newTask = new KanbanTask();
                     newTask.setUser(user);
@@ -44,6 +44,8 @@ public class KanbanService {
                     newTask.setPriority(template.getPriority());
                     newTask.setAssignee("Você");
                     newTask.setStatus("todo");
+                    newTask.setChallengeInstructions(template.getChallengeInstructions());
+                    newTask.setStarterCode(template.getStarterCode());
                     taskRepository.save(newTask);
                 }
             }
@@ -76,6 +78,14 @@ public class KanbanService {
         task.setStatus(newStatus);
         task = taskRepository.save(task);
         return new KanbanTaskDTO(task);
+    }
+
+    @Transactional
+    public void saveUserCode(Long taskId, String code, Long userId) {
+        KanbanTask task = taskRepository.findByIdAndUserId(taskId, userId)
+                .orElseThrow(() -> new RuntimeException("Task not found or unauthorized"));
+        task.setUserCode(code);
+        taskRepository.save(task);
     }
 }
 

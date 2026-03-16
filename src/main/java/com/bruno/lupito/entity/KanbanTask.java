@@ -1,4 +1,5 @@
 package com.bruno.lupito.entity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +20,15 @@ public class KanbanTask {
     private String priority;
     private String assignee;
     private String status;
+
+    @Column(name = "challenge_instructions", columnDefinition = "TEXT")
+    private String challengeInstructions;
+
+    @Column(name = "starter_code", columnDefinition = "TEXT")
+    private String starterCode;
+
+    @Column(name = "user_code", columnDefinition = "TEXT")
+    private String userCode;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -53,4 +63,13 @@ public class KanbanTask {
 
     public Lesson getLesson() { return lesson; }
     public void setLesson(Lesson lesson) { this.lesson = lesson; }
+
+    public String getChallengeInstructions() { return challengeInstructions; }
+    public void setChallengeInstructions(String challengeInstructions) { this.challengeInstructions = challengeInstructions; }
+
+    public String getStarterCode() { return starterCode; }
+    public void setStarterCode(String starterCode) { this.starterCode = starterCode; }
+
+    public String getUserCode() { return userCode; }
+    public void setUserCode(String userCode) { this.userCode = userCode; }
 }

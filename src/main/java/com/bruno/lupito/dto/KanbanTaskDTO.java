@@ -9,6 +9,9 @@ public class KanbanTaskDTO {
     private String priority;
     private String assignee;
     private String status;
+    private String challengeInstructions;
+    private String starterCode;
+    private String userCode;
 
     public KanbanTaskDTO() {}
 
@@ -19,6 +22,9 @@ public class KanbanTaskDTO {
         this.priority = entity.getPriority();
         this.assignee = entity.getAssignee();
         this.status = entity.getStatus();
+        this.challengeInstructions = entity.getChallengeInstructions();
+        this.starterCode = entity.getStarterCode();
+        this.userCode = entity.getUserCode();
     }
 
     // Getters and Setters
@@ -39,4 +45,13 @@ public class KanbanTaskDTO {
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+
+    public String getChallengeInstructions() { return challengeInstructions; }
+    public void setChallengeInstructions(String challengeInstructions) { this.challengeInstructions = challengeInstructions; }
+
+    public String getStarterCode() { return starterCode; }
+    public void setStarterCode(String starterCode) { this.starterCode = starterCode; }
+
+    public String getUserCode() { return userCode; }
+    public void setUserCode(String userCode) { this.userCode = userCode; }
 }

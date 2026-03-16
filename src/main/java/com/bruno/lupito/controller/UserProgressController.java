@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bruno.lupito.dto.UserProgressDTO;
 import com.bruno.lupito.services.UserProgressService;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping(value = "/api/progress")
 public class UserProgressController {
@@ -26,8 +28,8 @@ public class UserProgressController {
     public ResponseEntity<UserProgressDTO> getUserProgress(
             @RequestParam Long userId,
             @PathVariable Long courseId) {
-        UserProgressDTO dto = service.getUserProgress(userId, courseId);
-        return ResponseEntity.ok().body(dto);
+        Optional<UserProgressDTO> dto = service.getUserProgress(userId, courseId);
+        return dto.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping(value = "/complete-lesson")
