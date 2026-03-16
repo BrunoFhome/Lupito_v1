@@ -9,19 +9,21 @@ public class UserDTO {
 	private String email;
 	private String password;
 	private String bio;
+        private Integer learningProgress;
 	
 	
 	public UserDTO() {
 	}
 	
 	
-	public UserDTO(Long id, String name, String email, String password, String bio) {
+	public UserDTO(Long id, String name, String email, String password, String bio, Integer learningProgress) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.bio = bio;
+                this.learningProgress = learningProgress;
 	}
 
 
@@ -32,6 +34,7 @@ public class UserDTO {
 		email = entity.getEmail();
 		password = entity.getPassword();
 		bio = entity.getBio();
+                learningProgress = entity.getLearningProgress();
 	}
 
 
@@ -88,7 +91,14 @@ public class UserDTO {
 
 	public void setBio(String bio) {
 		this.bio = bio;
-	}
-	
+        }
+
+        public Integer getLearningProgress() {
+                return learningProgress;
+        }
+
+        public void setLearningProgress(Integer learningProgress) {
+                this.learningProgress = learningProgress;
+        }
 
 }
