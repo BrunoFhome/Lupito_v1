@@ -10,5 +10,7 @@ import com.bruno.lupito.entity.User;
 public interface UserRepository extends JpaRepository<User, Long>{
 
 	Optional<UserDetails> findUserByEmail(String username);
-		
+
+	Optional<User> findByEmail(String email);
+
 }

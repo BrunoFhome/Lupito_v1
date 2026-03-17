@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bruno.lupito.config.TokenConfig;
+import com.bruno.lupito.dto.request.ForgotPasswordRequest;
 import com.bruno.lupito.dto.request.LoginRequest;
 import com.bruno.lupito.dto.request.RegisterUserRequest;
+import com.bruno.lupito.dto.request.ResetPasswordRequest;
 import com.bruno.lupito.dto.response.LoginResponse;
 import com.bruno.lupito.dto.response.RegisterUserResponse;
 import com.bruno.lupito.entity.User;
 import com.bruno.lupito.repository.UserRepository;
+import com.bruno.lupito.services.PasswordResetService;
 
 import jakarta.validation.Valid;
 
@@ -29,12 +32,16 @@ public class AuthController {
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManager authenticationManager;
 	private final TokenConfig tokenConfig;
-	
-	public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenConfig tokenConfig) {
+	private final PasswordResetService passwordResetService;
+
+	public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder,
+			AuthenticationManager authenticationManager, TokenConfig tokenConfig,
+			PasswordResetService passwordResetService) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.authenticationManager = authenticationManager;
 		this.tokenConfig = tokenConfig;
+		this.passwordResetService = passwordResetService;
 	}
 	
 	@PostMapping("/login")
@@ -54,10 +61,27 @@ public class AuthController {
 		newUser.setPassword(passwordEncoder.encode(request.password()));
 		newUser.setEmail(request.email());
 		newUser.setName(request.name());
-		
+
 		userRepository.save(newUser);
-		
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(new RegisterUserResponse(newUser.getName(), newUser.getEmail()));
 	}
-	
+
+	@PostMapping("/forgot-password")
+	public ResponseEntity<Void> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+		passwordResetService.sendResetEmail(request.email());
+		// Sempre retorna 200 para não revelar se o email existe
+		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping("/reset-password")
+	public ResponseEntity<Void> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+		try {
+			passwordResetService.resetPassword(request.token(), request.newPassword());
+			return ResponseEntity.ok().build();
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
 }

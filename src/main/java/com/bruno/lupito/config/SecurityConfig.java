@@ -41,7 +41,10 @@ public class SecurityConfig {
 				.authorizeHttpRequests(authorize -> authorize
 					.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
 					.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-					.requestMatchers(HttpMethod.POST, "/auth/register").permitAll().requestMatchers("/test-temp**").permitAll()
+					.requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+					.requestMatchers(HttpMethod.POST, "/auth/forgot-password").permitAll()
+					.requestMatchers(HttpMethod.POST, "/auth/reset-password").permitAll()
+					.requestMatchers("/test-temp**").permitAll()
 					.anyRequest().authenticated())
 				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
