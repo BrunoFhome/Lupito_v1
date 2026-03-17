@@ -1,21 +1,32 @@
 package com.bruno.lupito.dto;
 
 import com.bruno.lupito.entity.User;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class UserDTO {
-	
+
 	private Long id;
+
+	@NotBlank(message = "Nome é obrigatório")
+	@Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres")
 	private String name;
+
+	@NotBlank(message = "Email é obrigatório")
+	@Email(message = "Email inválido")
 	private String email;
+
 	private String password;
 	private String bio;
         private Integer learningProgress;
-	
-	
+        private Integer currentStreak;
+
+
 	public UserDTO() {
 	}
-	
-	
+
+
 	public UserDTO(Long id, String name, String email, String password, String bio, Integer learningProgress) {
 		super();
 		this.id = id;
@@ -35,6 +46,7 @@ public class UserDTO {
 		password = entity.getPassword();
 		bio = entity.getBio();
                 learningProgress = entity.getLearningProgress();
+                currentStreak = entity.getCurrentStreak() != null ? entity.getCurrentStreak() : 0;
 	}
 
 
@@ -99,6 +111,14 @@ public class UserDTO {
 
         public void setLearningProgress(Integer learningProgress) {
                 this.learningProgress = learningProgress;
+        }
+
+        public Integer getCurrentStreak() {
+                return currentStreak;
+        }
+
+        public void setCurrentStreak(Integer currentStreak) {
+                this.currentStreak = currentStreak;
         }
 
 }

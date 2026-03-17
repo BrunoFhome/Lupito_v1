@@ -1,5 +1,6 @@
 package com.bruno.lupito.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,10 +50,11 @@ public class UserProgressService {
     public UserProgressDTO completeLesson(Long userId, Long courseId, Integer currentSectionOrder,
             Integer currentLessonOrder) {
 
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+
         UserProgress progress = userProgressRepository.findByUserIdAndCourseId(userId, courseId)
                 .orElseGet(() -> {
-                    User user = userRepository.findById(userId)
-                            .orElseThrow(() -> new NoSuchElementException("User not found"));
                     Course course = courseRepository.findById(courseId)
                             .orElseThrow(() -> new NoSuchElementException("Course not found"));
                     return userProgressRepository.save(new UserProgress(null, user, course, 1, 1));
@@ -92,6 +94,28 @@ public class UserProgressService {
         }
 
         progress = userProgressRepository.save(progress);
+
+        // Update streak for the user
+        updateStreak(user);
+
         return new UserProgressDTO(progress);
+    }
+
+    private void updateStreak(User user) {
+        LocalDate today = LocalDate.now();
+        LocalDate lastStudy = user.getLastStudyDate();
+
+        if (lastStudy == null) {
+            user.setCurrentStreak(1);
+        } else if (lastStudy.isEqual(today)) {
+            // Already studied today — no change
+        } else if (lastStudy.isEqual(today.minusDays(1))) {
+            user.setCurrentStreak((user.getCurrentStreak() != null ? user.getCurrentStreak() : 0) + 1);
+        } else {
+            user.setCurrentStreak(1);
+        }
+
+        user.setLastStudyDate(today);
+        userRepository.save(user);
     }
 }

@@ -3,6 +3,7 @@ package com.bruno.lupito.config;
 import java.time.Instant;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
@@ -14,7 +15,8 @@ import com.bruno.lupito.entity.User;
 @Component
 public class TokenConfig {
 
-	private String secret = "secret";
+	@Value("${jwt.secret}")
+	private String secret;
 	
 	
 	public String generateToken(User user) {
