@@ -21,6 +21,8 @@ public class UserDTO {
 	private String bio;
         private Integer learningProgress;
         private Integer currentStreak;
+        private String city;
+        private String state;
 
 
 	public UserDTO() {
@@ -47,6 +49,8 @@ public class UserDTO {
 		bio = entity.getBio();
                 learningProgress = entity.getLearningProgress();
                 currentStreak = entity.getCurrentStreak() != null ? entity.getCurrentStreak() : 0;
+                city = entity.getCity();
+                state = entity.getState();
 	}
 
 
@@ -119,6 +123,22 @@ public class UserDTO {
 
         public void setCurrentStreak(Integer currentStreak) {
                 this.currentStreak = currentStreak;
+        }
+
+        public String getCity() {
+                return city;
+        }
+
+        public void setCity(String city) {
+                this.city = city;
+        }
+
+        public String getState() {
+                return state;
+        }
+
+        public void setState(String state) {
+                this.state = state;
         }
 
 }

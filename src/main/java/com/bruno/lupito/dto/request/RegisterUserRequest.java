@@ -14,6 +14,11 @@ public record RegisterUserRequest(
 
         @NotEmpty(message = "Senha é obrigatória")
         @Size(min = 6, message = "A senha deve ter no mínimo 6 caracteres")
-        String password) {
+        String password,
+
+        String city,
+
+        @Size(max = 2, message = "Estado deve ser a sigla com 2 letras")
+        String state) {
 
 }

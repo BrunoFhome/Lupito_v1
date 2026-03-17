@@ -61,6 +61,8 @@ public class AuthController {
 		newUser.setPassword(passwordEncoder.encode(request.password()));
 		newUser.setEmail(request.email());
 		newUser.setName(request.name());
+		newUser.setCity(request.city());
+		newUser.setState(request.state());
 
 		userRepository.save(newUser);
 

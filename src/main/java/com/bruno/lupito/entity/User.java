@@ -37,6 +37,9 @@ public class User implements UserDetails {
 
     private Integer learningProgress;
 
+    private String city;
+    private String state;
+
     @Column(name = "current_streak")
     private Integer currentStreak = 0;
 

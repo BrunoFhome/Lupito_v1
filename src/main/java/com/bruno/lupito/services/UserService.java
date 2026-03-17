@@ -67,12 +67,13 @@ public class UserService {
 		user.setEmail(dto.getEmail());
 		user.setPassword(dto.getPassword());
 		user.setBio(dto.getBio());
+		user.setCity(dto.getCity());
+		user.setState(dto.getState());
                 if (dto.getLearningProgress() != null) {
                         user.setLearningProgress(dto.getLearningProgress());
                 } else if (user.getLearningProgress() == null) {
                         user.setLearningProgress(0);
                 }
-		
 	}
 
 }
