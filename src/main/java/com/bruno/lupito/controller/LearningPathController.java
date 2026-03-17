@@ -48,6 +48,12 @@ public class LearningPathController {
         return ResponseEntity.ok().body(list);
     }
 
+    @GetMapping(value = "/lessons/{lessonId}")
+    public ResponseEntity<LessonDTO> findLessonById(@PathVariable Long lessonId) {
+        LessonDTO dto = service.findLessonById(lessonId);
+        return ResponseEntity.ok().body(dto);
+    }
+
     @GetMapping(value = "/lessons/{lessonId}/exercises")
     public ResponseEntity<List<ExerciseDTO>> findExercisesByLesson(@PathVariable Long lessonId) {
         List<ExerciseDTO> list = service.findExercisesByLesson(lessonId);

@@ -60,6 +60,13 @@ public class LearningPathService {
     }
 
     @Transactional(readOnly = true)
+    public LessonDTO findLessonById(Long lessonId) {
+        Lesson lesson = lessonRepository.findById(lessonId)
+                .orElseThrow(() -> new RuntimeException("Lesson not found"));
+        return new LessonDTO(lesson);
+    }
+
+    @Transactional(readOnly = true)
     public List<ExerciseDTO> findExercisesByLesson(Long lessonId) {
         List<Exercise> list = exerciseRepository.findByLessonId(lessonId);
         return list.stream().map(x -> new ExerciseDTO(x)).collect(Collectors.toList());
