@@ -1,2 +1,0 @@
-ALTER TABLE tb_users ADD COLUMN city  VARCHAR(100);
-ALTER TABLE tb_users ADD COLUMN state VARCHAR(2);
