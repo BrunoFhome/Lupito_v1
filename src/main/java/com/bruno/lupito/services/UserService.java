@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bruno.lupito.controller.exception.RecursoNaoEncontradoException;
 import com.bruno.lupito.dto.UserDTO;
 import com.bruno.lupito.entity.User;
 import com.bruno.lupito.repository.UserRepository;
@@ -20,7 +21,7 @@ public class UserService {
 	
 	@Transactional(readOnly = true)
 	public UserDTO findById(Long id) {
-		User user = repository.findById(id).orElseThrow(()-> new RuntimeException("Elemento nao encontrado"));
+		User user = repository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado"));
 		return new UserDTO(user);
 	}
 	
@@ -47,7 +48,7 @@ public class UserService {
 			entity = repository.save(entity);
 			return new UserDTO(entity);
 		} catch (EntityNotFoundException e) {
-			throw new RuntimeException("Entidade nao encontrada");
+			throw new RecursoNaoEncontradoException("Usuário não encontrado");
 		}
 		
 		
@@ -56,7 +57,7 @@ public class UserService {
 	@Transactional
 	public void delete(Long id) {
 		if (!repository.existsById(id)) {
-			throw new RuntimeException("Recurso nao encontrado");
+			throw new RecursoNaoEncontradoException("Usuário não encontrado");
 		}
 			repository.deleteById(id);
 	}

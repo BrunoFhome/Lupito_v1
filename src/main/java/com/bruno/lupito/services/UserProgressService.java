@@ -18,9 +18,8 @@ import com.bruno.lupito.repository.CourseRepository;
 import com.bruno.lupito.repository.LessonRepository;
 import com.bruno.lupito.repository.SectionRepository;
 import com.bruno.lupito.repository.UserProgressRepository;
+import com.bruno.lupito.controller.exception.RecursoNaoEncontradoException;
 import com.bruno.lupito.repository.UserRepository;
-
-import java.util.NoSuchElementException;
 
 @Service
 public class UserProgressService {
@@ -51,19 +50,19 @@ public class UserProgressService {
             Integer currentLessonOrder) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException("User not found"));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado"));
 
         UserProgress progress = userProgressRepository.findByUserIdAndCourseId(userId, courseId)
                 .orElseGet(() -> {
                     Course course = courseRepository.findById(courseId)
-                            .orElseThrow(() -> new NoSuchElementException("Course not found"));
+                            .orElseThrow(() -> new RecursoNaoEncontradoException("Curso não encontrado"));
                     return userProgressRepository.save(new UserProgress(null, user, course, 1, 1));
                 });
 
         // Find the current section to get the real lesson count
         Section currentSection = sectionRepository
                 .findByCourseIdAndListOrder(courseId, currentSectionOrder)
-                .orElseThrow(() -> new NoSuchElementException("Section not found"));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Seção não encontrada"));
 
         List<Lesson> lessonsInSection = lessonRepository.findBySectionIdOrderByListOrderAsc(currentSection.getId());
         int maxLessonOrder = lessonsInSection.stream()

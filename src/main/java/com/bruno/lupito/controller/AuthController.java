@@ -78,12 +78,8 @@ public class AuthController {
 
 	@PostMapping("/reset-password")
 	public ResponseEntity<Void> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
-		try {
-			passwordResetService.resetPassword(request.token(), request.newPassword());
-			return ResponseEntity.ok().build();
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.badRequest().build();
-		}
+		passwordResetService.resetPassword(request.token(), request.newPassword());
+		return ResponseEntity.ok().build();
 	}
 
 }

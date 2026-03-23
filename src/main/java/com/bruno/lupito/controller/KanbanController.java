@@ -38,6 +38,12 @@ public class KanbanController {
         return ResponseEntity.ok(kanbanService.updateTaskStatus(taskId, status, userData.userId()));
     }
 
+    @PutMapping("/tasks/{taskId}/priority")
+    public ResponseEntity<KanbanTaskDTO> updateTaskPriority(@PathVariable Long taskId, @RequestParam String priority, Authentication auth) {
+        JWTUserData userData = (JWTUserData) auth.getPrincipal();
+        return ResponseEntity.ok(kanbanService.updateTaskPriority(taskId, priority, userData.userId()));
+    }
+
     @PutMapping("/tasks/{taskId}/code")
     public ResponseEntity<Void> saveCode(@PathVariable Long taskId, @RequestBody Map<String, String> body, Authentication auth) {
         JWTUserData userData = (JWTUserData) auth.getPrincipal();

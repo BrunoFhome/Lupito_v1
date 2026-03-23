@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bruno.lupito.controller.exception.RequisicaoInvalidaException;
 import com.bruno.lupito.entity.PasswordResetToken;
 import com.bruno.lupito.entity.User;
 import com.bruno.lupito.repository.PasswordResetTokenRepository;
@@ -74,13 +75,13 @@ public class PasswordResetService {
     @Transactional
     public void resetPassword(String token, String newPassword) {
         PasswordResetToken resetToken = tokenRepository.findByToken(token)
-                .orElseThrow(() -> new IllegalArgumentException("Token inválido"));
+                .orElseThrow(() -> new RequisicaoInvalidaException("Token inválido"));
 
         if (resetToken.isExpired()) {
-            throw new IllegalArgumentException("Token expirado");
+            throw new RequisicaoInvalidaException("Token expirado");
         }
         if (resetToken.isUsed()) {
-            throw new IllegalArgumentException("Token já utilizado");
+            throw new RequisicaoInvalidaException("Token já utilizado");
         }
 
         User user = resetToken.getUser();

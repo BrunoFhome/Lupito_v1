@@ -11,6 +11,8 @@ import com.bruno.lupito.dto.KanbanTaskDTO;
 import com.bruno.lupito.entity.KanbanTask;
 import com.bruno.lupito.entity.KanbanTemplate;
 import com.bruno.lupito.entity.User;
+import com.bruno.lupito.controller.exception.AcessoNegadoException;
+import com.bruno.lupito.controller.exception.RecursoNaoEncontradoException;
 import com.bruno.lupito.repository.KanbanTaskRepository;
 import com.bruno.lupito.repository.KanbanTemplateRepository;
 import com.bruno.lupito.repository.UserRepository;
@@ -54,7 +56,8 @@ public class KanbanService {
 
     @Transactional
     public List<KanbanTaskDTO> getTasksForUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado"));
         syncTasksForUser(user);
 
         return taskRepository.findByUserId(userId).stream()
@@ -65,15 +68,17 @@ public class KanbanService {
     @Transactional
     public void unlockTaskForLesson(Long userId, Long lessonId) {
         // Redundant explicit unlock via route can still work
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado"));
         syncTasksForUser(user);
     }
 
     @Transactional
     public KanbanTaskDTO updateTaskStatus(Long taskId, String newStatus, Long userId) {
-        KanbanTask task = taskRepository.findById(taskId).orElseThrow();
+        KanbanTask task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa não encontrada"));
         if (!task.getUser().getId().equals(userId)) {
-            throw new RuntimeException("Unauthorized");
+            throw new AcessoNegadoException("Você não tem permissão para alterar esta tarefa");
         }
         task.setStatus(newStatus);
         task = taskRepository.save(task);
@@ -81,9 +86,21 @@ public class KanbanService {
     }
 
     @Transactional
+    public KanbanTaskDTO updateTaskPriority(Long taskId, String newPriority, Long userId) {
+        KanbanTask task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa não encontrada"));
+        if (!task.getUser().getId().equals(userId)) {
+            throw new AcessoNegadoException("Você não tem permissão para alterar esta tarefa");
+        }
+        task.setPriority(newPriority);
+        task = taskRepository.save(task);
+        return new KanbanTaskDTO(task);
+    }
+
+    @Transactional
     public void saveUserCode(Long taskId, String code, Long userId) {
         KanbanTask task = taskRepository.findByIdAndUserId(taskId, userId)
-                .orElseThrow(() -> new RuntimeException("Task not found or unauthorized"));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa não encontrada ou acesso não permitido"));
         task.setUserCode(code);
         taskRepository.save(task);
     }

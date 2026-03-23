@@ -15,6 +15,7 @@ import com.bruno.lupito.entity.Course;
 import com.bruno.lupito.entity.Exercise;
 import com.bruno.lupito.entity.Lesson;
 import com.bruno.lupito.entity.Section;
+import com.bruno.lupito.controller.exception.RecursoNaoEncontradoException;
 import com.bruno.lupito.repository.CourseRepository;
 import com.bruno.lupito.repository.ExerciseRepository;
 import com.bruno.lupito.repository.LessonRepository;
@@ -43,7 +44,7 @@ public class LearningPathService {
 
     @Transactional(readOnly = true)
     public CourseDTO findCourseById(Long id) {
-        Course course = courseRepository.findById(id).orElseThrow(() -> new RuntimeException("Course not found"));
+        Course course = courseRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("Curso não encontrado"));
         return new CourseDTO(course);
     }
 
@@ -62,7 +63,7 @@ public class LearningPathService {
     @Transactional(readOnly = true)
     public LessonDTO findLessonById(Long lessonId) {
         Lesson lesson = lessonRepository.findById(lessonId)
-                .orElseThrow(() -> new RuntimeException("Lesson not found"));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Aula não encontrada"));
         return new LessonDTO(lesson);
     }
 
