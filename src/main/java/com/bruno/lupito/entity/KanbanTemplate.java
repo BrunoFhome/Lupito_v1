@@ -24,6 +24,9 @@ public class KanbanTemplate {
     @jakarta.persistence.Column(name = "starter_code", columnDefinition = "TEXT")
     private String starterCode;
 
+    @jakarta.persistence.Column(name = "language", length = 20)
+    private String language = "javascript";
+
     @ManyToOne
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
@@ -46,4 +49,7 @@ public class KanbanTemplate {
 
     public String getStarterCode() { return starterCode; }
     public void setStarterCode(String starterCode) { this.starterCode = starterCode; }
+
+    public String getLanguage() { return language; }
+    public void setLanguage(String language) { this.language = language; }
 }

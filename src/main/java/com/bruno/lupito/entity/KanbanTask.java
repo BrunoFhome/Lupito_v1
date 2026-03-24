@@ -30,6 +30,9 @@ public class KanbanTask {
     @Column(name = "user_code", columnDefinition = "TEXT")
     private String userCode;
 
+    @Column(name = "language", length = 20)
+    private String language = "javascript";
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -72,4 +75,7 @@ public class KanbanTask {
 
     public String getUserCode() { return userCode; }
     public void setUserCode(String userCode) { this.userCode = userCode; }
+
+    public String getLanguage() { return language; }
+    public void setLanguage(String language) { this.language = language; }
 }

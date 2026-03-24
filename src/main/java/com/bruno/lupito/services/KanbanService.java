@@ -48,6 +48,7 @@ public class KanbanService {
                     newTask.setStatus("todo");
                     newTask.setChallengeInstructions(template.getChallengeInstructions());
                     newTask.setStarterCode(template.getStarterCode());
+                    newTask.setLanguage(template.getLanguage() != null ? template.getLanguage() : "javascript");
                     taskRepository.save(newTask);
                 }
             }
