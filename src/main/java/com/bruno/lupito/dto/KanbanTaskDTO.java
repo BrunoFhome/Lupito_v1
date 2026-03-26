@@ -13,6 +13,7 @@ public class KanbanTaskDTO {
     private String starterCode;
     private String userCode;
     private String language;
+    private String expectedOutput;
 
     public KanbanTaskDTO() {}
 
@@ -27,6 +28,7 @@ public class KanbanTaskDTO {
         this.starterCode = entity.getStarterCode();
         this.userCode = entity.getUserCode();
         this.language = entity.getLanguage();
+        this.expectedOutput = entity.getExpectedOutput();
     }
 
     // Getters and Setters
@@ -59,4 +61,7 @@ public class KanbanTaskDTO {
 
     public String getLanguage() { return language; }
     public void setLanguage(String language) { this.language = language; }
+
+    public String getExpectedOutput() { return expectedOutput; }
+    public void setExpectedOutput(String expectedOutput) { this.expectedOutput = expectedOutput; }
 }

@@ -14,8 +14,6 @@ import com.bruno.lupito.config.JWTUserData;
 import com.bruno.lupito.dto.UserProgressDTO;
 import com.bruno.lupito.services.UserProgressService;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping(value = "/api/progress")
 public class UserProgressController {
@@ -28,8 +26,9 @@ public class UserProgressController {
             @PathVariable Long courseId,
             Authentication auth) {
         JWTUserData userData = (JWTUserData) auth.getPrincipal();
-        Optional<UserProgressDTO> dto = service.getUserProgress(userData.userId(), courseId);
-        return dto.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        UserProgressDTO dto = service.getUserProgress(userData.userId(), courseId)
+                .orElseGet(() -> new UserProgressDTO(null, userData.userId(), courseId, 1, 1));
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping(value = "/complete-lesson")
