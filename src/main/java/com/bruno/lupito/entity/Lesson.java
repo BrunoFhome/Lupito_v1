@@ -27,6 +27,8 @@ public class Lesson {
 
     private String title;
     private String theoryContent;
+    private String codeExample;
+    private String codeLanguage;
     private Integer listOrder;
 
     @ManyToOne

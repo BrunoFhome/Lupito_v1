@@ -13,6 +13,7 @@ target/
 .claude
 .springBeans
 .sts4-cache
+.CLAUDE.md
 
 ### IntelliJ IDEA ###
 .idea

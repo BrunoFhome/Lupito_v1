@@ -43,6 +43,8 @@ CREATE TABLE tb_lessons (
     id             BIGSERIAL    PRIMARY KEY,
     title          VARCHAR(255) NOT NULL,
     theory_content TEXT,
+    code_example   TEXT,
+    code_language  VARCHAR(20)  NOT NULL DEFAULT 'javascript',
     list_order     INTEGER      NOT NULL,
     section_id     BIGINT       NOT NULL,
     CONSTRAINT fk_lesson_section FOREIGN KEY (section_id) REFERENCES tb_sections(id) ON DELETE CASCADE

@@ -3,6 +3,7 @@ package com.bruno.lupito.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -17,6 +18,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,9 +48,31 @@ public class SecurityConfig {
 					.requestMatchers(HttpMethod.POST, "/auth/reset-password").permitAll()
 					.requestMatchers("/test-temp**").permitAll()
 					.anyRequest().authenticated())
+				.exceptionHandling(ex -> ex
+					.authenticationEntryPoint((request, response, authException) -> {
+						response.setStatus(HttpStatus.UNAUTHORIZED.value());
+						response.setContentType("application/json;charset=UTF-8");
+						String timestamp = Instant.now().toString();
+						response.getWriter().write(
+							"{\"status\":401,\"erro\":\"Não autenticado\"," +
+							"\"mensagem\":\"Token ausente ou inválido. Faça login novamente.\"," +
+							"\"timestamp\":\"" + timestamp + "\"}"
+						);
+					})
+					.accessDeniedHandler((request, response, accessDeniedException) -> {
+						response.setStatus(HttpStatus.FORBIDDEN.value());
+						response.setContentType("application/json;charset=UTF-8");
+						String timestamp = Instant.now().toString();
+						response.getWriter().write(
+							"{\"status\":403,\"erro\":\"Acesso negado\"," +
+							"\"mensagem\":\"Você não tem permissão para realizar esta ação.\"," +
+							"\"timestamp\":\"" + timestamp + "\"}"
+						);
+					})
+				)
 				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
-				
+
 	}
 	
 	@Bean

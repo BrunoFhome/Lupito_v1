@@ -1,365 +1,394 @@
 -- ════════════════════════════════════════════════════════════════════════════
--- TEMPLATES DE KANBAN — um por lição (20 no total)
--- Trilha 1 (lições 1–10): language = 'javascript'
--- Trilha 2 (lições 11–20): language = 'web' (starter_code em JSON)
+-- TEMPLATES DE KANBAN — um por módulo (seção)
+-- Cada template está vinculado à ÚLTIMA aula do módulo, então só é
+-- desbloqueado quando o aluno conclui o módulo inteiro.
+--
+-- Trilha 1 (10 módulos → lessons 3,6,9,12,15,18,21,24,27,30)
+-- Trilha 2 (2 módulos  → lessons 33, 35)
+-- Trilha 3 (2 módulos  → lessons 38, 40)
 -- ════════════════════════════════════════════════════════════════════════════
 
--- ── Lição 1: Introdução à Lógica e ao JavaScript ─────────────────────────────
+-- ── Trilha 1 — Módulo 1: Primeiros Passos (lesson 3) ─────────────────────
+
 INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
 (1,
- 'Introdução à Lógica e ao JavaScript',
- 'Primeiro contato com lógica de programação e com a sintaxe básica do JavaScript.',
+ 'Desafio: Primeiros Passos',
+ 'Consolide variáveis, tipos e console.log em um mini-programa.',
  'Alta',
- 1,
- 'javascript',
- 'Use console.log() para imprimir uma mensagem de boas-vindas. Em seguida, descreva em um comentário o que é um algoritmo com suas próprias palavras.',
- $code$// Desafio: Primeiro programa em JavaScript
-// 1. Imprima "Olá, mundo!" no console
-// 2. Adicione um comentário explicando o que é um algoritmo
-
-console.log("Olá, mundo!");
-
-// Um algoritmo é:
-// (escreva sua definição aqui)
-$code$);
-
--- ── Lição 2: Variáveis e Tipos de Dados ──────────────────────────────────────
-INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(2,
- 'Variáveis e Tipos de Dados',
- 'Aprendendo a armazenar informações em variáveis e identificar tipos básicos.',
- 'Alta',
- 2,
- 'javascript',
- 'Declare variáveis para representar um perfil de usuário: nome (string), idade (number) e ativo (boolean). Depois imprima cada variável e seu tipo usando typeof.',
- $code$// Desafio: Declare e inspecione variáveis
-// 1. Crie variáveis para nome, idade e ativo
-// 2. Use typeof para verificar o tipo de cada uma
-
-var nome = "Maria";
-var idade = 20;
-var ativo = true;
-
-console.log(nome, typeof nome);
-console.log(idade, typeof idade);
-console.log(ativo, typeof ativo);
-$code$);
-
--- ── Lição 3: Operadores Matemáticos e Comparação ─────────────────────────────
-INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(3,
- 'Operadores Matemáticos e Comparação',
- 'Uso de operadores para cálculos e comparações no código.',
- 'Média',
  3,
  'javascript',
- 'Calcule o dobro e a metade de um número. Depois verifique se o dobro é maior que 10 e se a metade é igual a 5. Imprima os resultados.',
- $code$// Desafio: Operadores em ação
-// 1. Defina um número
-// 2. Calcule o dobro e a metade
-// 3. Compare os resultados e imprima true ou false
+ 'Crie um mini-programa que: (1) declare variáveis com seu nome, idade e linguagem favorita; (2) exiba uma apresentação completa usando template literals; (3) mostre o tipo de cada variável com typeof; (4) adicione comentários explicando cada bloco.',
+$code$// Desafio — Primeiros Passos
+// Preencha as variáveis e complete as exibições
 
-var numero = 10;
+const nome = "";        // seu nome
+const idade = 0;        // sua idade
+const linguagem = "";   // sua linguagem favorita
 
-var dobro = numero * 2;
-var metade = numero / 2;
+// Apresentação com template literal
+console.log(`Olá, meu nome é ${nome}...`);
 
-console.log("Dobro:", dobro);
-console.log("Metade:", metade);
-console.log("Dobro maior que 10?", dobro > 10);
-console.log("Metade igual a 5?", metade === 5);
+// Tipos de cada variável
+console.log(typeof nome);
+console.log(typeof idade);
+console.log(typeof linguagem);
 $code$);
 
--- ── Lição 4: Estruturas Condicionais ─────────────────────────────────────────
+-- ── Trilha 1 — Módulo 2: Operadores (lesson 6) ───────────────────────────
+
 INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(4,
- 'Estruturas Condicionais',
- 'Tomada de decisão com if, else e else if.',
- 'Alta',
- 4,
- 'javascript',
- 'Crie uma variável com uma nota de 0 a 10. Use if, else if e else para classificar a nota como "Aprovado" (>= 7), "Recuperação" (>= 5) ou "Reprovado" (< 5).',
- $code$// Desafio: Classificador de notas
-// Altere o valor de 'nota' e veja o resultado
-
-var nota = 8;
-
-if (nota >= 7) {
-  console.log("Aprovado");
-} else if (nota >= 5) {
-  console.log("Recuperação");
-} else {
-  console.log("Reprovado");
-}
-$code$);
-
--- ── Lição 5: Operadores Lógicos ───────────────────────────────────────────────
-INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(5,
- 'Operadores Lógicos',
- 'Combinação de condições com AND, OR e NOT.',
- 'Média',
- 5,
- 'javascript',
- 'Crie variáveis de idade e possuiIngresso. Use && para verificar se alguém pode entrar em um evento (>= 18 E possui ingresso). Use || para verificar se é menor de 18 OU não tem ingresso.',
- $code$// Desafio: Controle de acesso com operadores lógicos
-
-var idade = 20;
-var possuiIngresso = true;
-
-var podeEntrar = idade >= 18 && possuiIngresso;
-var bloqueado  = idade < 18 || !possuiIngresso;
-
-console.log("Pode entrar?", podeEntrar);
-console.log("Bloqueado?",   bloqueado);
-$code$);
-
--- ── Lição 6: Laços de Repetição ──────────────────────────────────────────────
-INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(6,
- 'Laços de Repetição',
- 'Automatizando tarefas repetitivas com for e while.',
+(2,
+ 'Desafio: Calculadora Básica',
+ 'Implemente uma calculadora com os quatro operadores e operadores de incremento.',
  'Alta',
  6,
  'javascript',
- 'Use um laço for para imprimir os números de 1 a 10. Em seguida, use um laço while para imprimir apenas os números pares de 2 a 10.',
- $code$// Desafio: Laços de repetição
+ 'Crie uma calculadora que receba dois números e exiba: soma, subtração, multiplicação, divisão e resto. Demonstre também o uso de ++, -- e operadores de atribuição composta (+=, -=, *=, /=).',
+$code$// Desafio — Calculadora Básica
+let a = 10;
+let b = 3;
 
-// 1. Imprima números de 1 a 10 com for
-for (var i = 1; i <= 10; i++) {
-  console.log(i);
-}
+// Operações básicas
+console.log("Soma:", a + b);
+console.log("Subtração:", a - b);
+console.log("Multiplicação:", a * b);
+console.log("Divisão:", a / b);
+console.log("Resto:", a % b);
 
-// 2. Imprima números pares de 2 a 10 com while
-var j = 2;
-while (j <= 10) {
-  console.log("Par:", j);
-  j += 2;
-}
+// Incremento / decremento
+let contador = 0;
+contador++;
+console.log("Após ++:", contador);
+contador--;
+console.log("Após --:", contador);
+
+// Atribuição composta
+a += 5;
+console.log("a após += 5:", a);
 $code$);
 
--- ── Lição 7: Funções ─────────────────────────────────────────────────────────
+-- ── Trilha 1 — Módulo 3: Comparação e Lógica (lesson 9) ──────────────────
+
 INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(7,
- 'Funções',
- 'Organizando o código em blocos reutilizáveis.',
+(3,
+ 'Desafio: Verificador de Acesso',
+ 'Use operadores lógicos e de comparação para controlar acesso a um sistema.',
  'Alta',
- 7,
- 'javascript',
- 'Crie uma função chamada saudacao que receba um nome como parâmetro e retorne "Olá, <nome>!". Depois crie uma função soma que receba dois números e retorne a soma. Teste ambas.',
- $code$// Desafio: Criando e chamando funções
-
-function saudacao(nome) {
-  return "Olá, " + nome + "!";
-}
-
-function soma(a, b) {
-  return a + b;
-}
-
-console.log(saudacao("Ana"));
-console.log("Soma:", soma(3, 7));
-$code$);
-
--- ── Lição 8: Arrays ───────────────────────────────────────────────────────────
-INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(8,
- 'Arrays',
- 'Armazenando coleções de valores em uma única estrutura.',
- 'Média',
- 8,
- 'javascript',
- 'Crie um array com 5 frutas. Imprima o primeiro e o último elemento. Use um laço for para imprimir todas as frutas. Adicione uma nova fruta com push e imprima o tamanho final.',
- $code$// Desafio: Trabalhando com arrays
-
-var frutas = ["maçã", "banana", "laranja", "uva", "morango"];
-
-console.log("Primeira:", frutas[0]);
-console.log("Última:",   frutas[frutas.length - 1]);
-
-for (var i = 0; i < frutas.length; i++) {
-  console.log(frutas[i]);
-}
-
-frutas.push("manga");
-console.log("Total de frutas:", frutas.length);
-$code$);
-
--- ── Lição 9: Objetos ─────────────────────────────────────────────────────────
-INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(9,
- 'Objetos',
- 'Representando entidades com propriedades e valores.',
- 'Média',
  9,
  'javascript',
- 'Crie um objeto aluno com as propriedades nome, idade e nota. Imprima cada propriedade. Depois adicione uma nova propriedade aprovado com base na nota (>= 7) e imprima o objeto completo.',
- $code$// Desafio: Criando e manipulando objetos
+ 'Crie um verificador que receba idade e pontuação. Exiba: (1) se a pessoa tem 18 anos ou mais; (2) se a pontuação é entre 50 e 100; (3) se pode acessar o sistema (idade >= 18 E pontuação >= 50); (4) se está bloqueada (pontuação < 10 OU idade < 13). Use ===, !==, &&, || e !.',
+$code$// Desafio — Verificador de Acesso
+const idade = 20;
+const pontuacao = 75;
 
-var aluno = {
-  nome:  "João",
-  idade: 17,
-  nota:  8.5
+// É maior de idade?
+console.log("Maior de idade:", idade >= 18);
+
+// Pontuação entre 50 e 100?
+console.log("Pontuação válida:", pontuacao >= 50 && pontuacao <= 100);
+
+// Pode acessar?
+const podeAcessar = idade >= 18 && pontuacao >= 50;
+console.log("Acesso permitido:", podeAcessar);
+
+// Está bloqueado?
+const bloqueado = pontuacao < 10 || idade < 13;
+console.log("Bloqueado:", bloqueado);
+$code$);
+
+-- ── Trilha 1 — Módulo 4: Condicionais (lesson 12) ────────────────────────
+
+INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
+(4,
+ 'Desafio: Classificador de Notas',
+ 'Use if/else e switch para classificar notas e dias da semana.',
+ 'Alta',
+ 12,
+ 'javascript',
+ 'Crie um programa que: (1) classifique uma nota de 0–10 (A ≥ 9, B ≥ 7, C ≥ 5, D < 5) usando if/else if; (2) use switch para exibir se um número de dia (1–7) é dia de semana ou fim de semana; (3) use operador ternário para exibir "Aprovado" ou "Reprovado" com base na nota.',
+$code$// Desafio — Classificador de Notas
+const nota = 8;
+const diaSemana = 6; // 1 = segunda, 7 = domingo
+
+// Classificação com if/else if
+if (nota >= 9) {
+  console.log("Conceito: A");
+} else if (nota >= 7) {
+  console.log("Conceito: B");
+} else if (nota >= 5) {
+  console.log("Conceito: C");
+} else {
+  console.log("Conceito: D");
+}
+
+// Dia com switch
+switch (diaSemana) {
+  case 1: case 2: case 3: case 4: case 5:
+    console.log("Dia útil"); break;
+  case 6: case 7:
+    console.log("Fim de semana"); break;
+  default:
+    console.log("Dia inválido");
+}
+
+// Ternário
+console.log(nota >= 5 ? "Aprovado" : "Reprovado");
+$code$);
+
+-- ── Trilha 1 — Módulo 5: Laços de Repetição (lesson 15) ──────────────────
+
+INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
+(5,
+ 'Desafio: Tabuada e FizzBuzz',
+ 'Combine for, while e do/while para gerar sequências numéricas.',
+ 'Alta',
+ 15,
+ 'javascript',
+ 'Crie um programa que: (1) exiba a tabuada de 7 usando for; (2) implemente FizzBuzz de 1 a 30 (múltiplo de 3 → "Fizz", de 5 → "Buzz", de ambos → "FizzBuzz"); (3) use while para somar números de 1 a 100 e exibir o resultado.',
+$code$// Desafio — Tabuada e FizzBuzz
+
+// 1. Tabuada do 7
+for (let i = 1; i <= 10; i++) {
+  console.log(`7 x ${i} = ${7 * i}`);
+}
+
+// 2. FizzBuzz
+for (let n = 1; n <= 30; n++) {
+  if (n % 15 === 0) console.log("FizzBuzz");
+  else if (n % 3 === 0) console.log("Fizz");
+  else if (n % 5 === 0) console.log("Buzz");
+  else console.log(n);
+}
+
+// 3. Soma com while
+let soma = 0;
+let i = 1;
+while (i <= 100) {
+  soma += i;
+  i++;
+}
+console.log("Soma 1–100:", soma);
+$code$);
+
+-- ── Trilha 1 — Módulo 6: Funções (lesson 18) ─────────────────────────────
+
+INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
+(6,
+ 'Desafio: Biblioteca de Funções',
+ 'Crie funções reutilizáveis com declaração, expressão e arrow function.',
+ 'Alta',
+ 18,
+ 'javascript',
+ 'Implemente: (1) função `calcularMedia(a, b, c)` que retorna a média de três números; (2) arrow function `ehPar` que retorna true/false; (3) função `saudacao(nome, periodo = "dia")` com parâmetro padrão que exibe "Bom {periodo}, {nome}!"; (4) chame cada função com exemplos.',
+$code$// Desafio — Biblioteca de Funções
+
+// 1. Função de média
+function calcularMedia(a, b, c) {
+  return (a + b + c) / 3;
+}
+console.log("Média:", calcularMedia(7, 8, 9));
+
+// 2. Arrow function
+const ehPar = (n) => n % 2 === 0;
+console.log("4 é par?", ehPar(4));
+console.log("7 é par?", ehPar(7));
+
+// 3. Parâmetro padrão
+function saudacao(nome, periodo = "dia") {
+  console.log(`Bom ${periodo}, ${nome}!`);
+}
+saudacao("Ana");
+saudacao("Carlos", "tarde");
+$code$);
+
+-- ── Trilha 1 — Módulo 7: Strings (lesson 21) ─────────────────────────────
+
+INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
+(7,
+ 'Desafio: Processador de Textos',
+ 'Manipule strings com métodos built-in e template literals.',
+ 'Alta',
+ 21,
+ 'javascript',
+ 'Crie um processador que: (1) receba uma frase e exiba em maiúsculas e minúsculas; (2) conte quantas palavras existem (dica: split); (3) substitua todos os espaços por hífens; (4) verifique se a frase contém a palavra "JavaScript"; (5) exiba os 10 primeiros caracteres com slice.',
+$code$// Desafio — Processador de Textos
+const frase = "Aprender JavaScript é muito divertido";
+
+// 1. Maiúsculas e minúsculas
+console.log(frase.toUpperCase());
+console.log(frase.toLowerCase());
+
+// 2. Contagem de palavras
+const palavras = frase.split(" ");
+console.log("Palavras:", palavras.length);
+
+// 3. Espaços → hífens
+console.log(frase.replaceAll(" ", "-"));
+
+// 4. Contém "JavaScript"?
+console.log("Contém JavaScript:", frase.includes("JavaScript"));
+
+// 5. Primeiros 10 caracteres
+console.log(frase.slice(0, 10));
+$code$);
+
+-- ── Trilha 1 — Módulo 8: Arrays (lesson 24) ──────────────────────────────
+
+INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
+(8,
+ 'Desafio: Gerenciador de Lista',
+ 'Use métodos de array para filtrar, transformar e reduzir dados.',
+ 'Alta',
+ 24,
+ 'javascript',
+ 'Dado um array de números [3, 7, 1, 9, 4, 6, 2, 8, 5]: (1) filtre apenas os pares com filter; (2) dobre cada valor com map; (3) calcule a soma total com reduce; (4) ordene em ordem crescente; (5) verifique se algum número é maior que 8 com some.',
+$code$// Desafio — Gerenciador de Lista
+const numeros = [3, 7, 1, 9, 4, 6, 2, 8, 5];
+
+// 1. Filtrar pares
+const pares = numeros.filter(n => n % 2 === 0);
+console.log("Pares:", pares);
+
+// 2. Dobrar valores
+const dobrados = numeros.map(n => n * 2);
+console.log("Dobrados:", dobrados);
+
+// 3. Soma total
+const soma = numeros.reduce((acc, n) => acc + n, 0);
+console.log("Soma:", soma);
+
+// 4. Ordenar
+const ordenados = [...numeros].sort((a, b) => a - b);
+console.log("Ordenados:", ordenados);
+
+// 5. Algum > 8?
+console.log("Algum > 8:", numeros.some(n => n > 8));
+$code$);
+
+-- ── Trilha 1 — Módulo 9: Objetos (lesson 27) ─────────────────────────────
+
+INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
+(9,
+ 'Desafio: Sistema de Cadastro',
+ 'Modele dados com objetos, destructuring e métodos.',
+ 'Alta',
+ 27,
+ 'javascript',
+ 'Crie um objeto `pessoa` com nome, idade, email e um método `apresentar()`. Então: (1) acesse propriedades com dot notation e bracket notation; (2) use destructuring para extrair nome e email; (3) adicione uma nova propriedade `cidade` dinamicamente; (4) itere as propriedades com for...in.',
+$code$// Desafio — Sistema de Cadastro
+const pessoa = {
+  nome: "Maria",
+  idade: 28,
+  email: "maria@email.com",
+  apresentar() {
+    console.log(`Olá, sou ${this.nome}, tenho ${this.idade} anos.`);
+  }
 };
 
-console.log("Nome:",  aluno.nome);
-console.log("Idade:", aluno.idade);
-console.log("Nota:",  aluno.nota);
+// Chamando o método
+pessoa.apresentar();
 
-aluno.aprovado = aluno.nota >= 7;
-console.log("Aprovado:", aluno.aprovado);
-console.log(aluno);
+// Dot e bracket notation
+console.log(pessoa.nome);
+console.log(pessoa["email"]);
+
+// Destructuring
+const { nome, email } = pessoa;
+console.log(`Nome: ${nome}, E-mail: ${email}`);
+
+// Propriedade dinâmica
+pessoa.cidade = "São Paulo";
+console.log("Cidade:", pessoa.cidade);
+
+// for...in
+for (const chave in pessoa) {
+  if (typeof pessoa[chave] !== "function") {
+    console.log(`${chave}: ${pessoa[chave]}`);
+  }
+}
 $code$);
 
--- ── Lição 10: Resolução de Problemas ─────────────────────────────────────────
+-- ── Trilha 1 — Módulo 10: Combinando Tudo (lesson 30) ────────────────────
+
 INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
 (10,
- 'Resolução de Problemas',
- 'Aplicando lógica para interpretar e resolver desafios simples.',
+ 'Desafio: Mini Sistema de Alunos',
+ 'Combine funções, arrays e objetos para construir um mini sistema.',
  'Alta',
- 10,
+ 30,
  'javascript',
- 'Crie uma função calcularMedia que receba um array de notas e retorne a média. Depois crie uma função classificar que receba a média e retorne "Aprovado", "Recuperação" ou "Reprovado".',
- $code$// Desafio: Calcular e classificar notas
+ 'Crie um array de objetos `alunos` (mínimo 4), cada um com nome, notas (array de 3 valores) e um método `media()`. Então: (1) calcule a média de cada aluno; (2) filtre os aprovados (média >= 6); (3) encontre o aluno com maior média; (4) exiba um relatório formatado para cada aluno.',
+$code$// Desafio — Mini Sistema de Alunos
 
-function calcularMedia(notas) {
-  var soma = 0;
-  for (var i = 0; i < notas.length; i++) {
-    soma += notas[i];
-  }
-  return soma / notas.length;
-}
+const alunos = [
+  { nome: "Ana",    notas: [8, 7, 9],  media() { return this.notas.reduce((s, n) => s + n, 0) / this.notas.length; } },
+  { nome: "Bruno",  notas: [5, 4, 6],  media() { return this.notas.reduce((s, n) => s + n, 0) / this.notas.length; } },
+  { nome: "Clara",  notas: [9, 10, 8], media() { return this.notas.reduce((s, n) => s + n, 0) / this.notas.length; } },
+  { nome: "Diego",  notas: [3, 5, 4],  media() { return this.notas.reduce((s, n) => s + n, 0) / this.notas.length; } },
+];
 
-function classificar(media) {
-  if (media >= 7) return "Aprovado";
-  if (media >= 5) return "Recuperação";
-  return "Reprovado";
-}
+// Aprovados
+const aprovados = alunos.filter(a => a.media() >= 6);
+console.log("Aprovados:", aprovados.map(a => a.nome));
 
-var notas = [8, 6, 9, 7, 5];
-var media = calcularMedia(notas);
+// Maior média
+const melhor = alunos.reduce((m, a) => a.media() > m.media() ? a : m);
+console.log("Melhor aluno:", melhor.nome, "→", melhor.media().toFixed(1));
 
-console.log("Média:", media);
-console.log("Resultado:", classificar(media));
+// Relatório
+alunos.forEach(a => {
+  const status = a.media() >= 6 ? "✓ Aprovado" : "✗ Reprovado";
+  console.log(`${a.nome}: média ${a.media().toFixed(1)} — ${status}`);
+});
 $code$);
 
--- ════════════════════════════════════════════════════════════════════════════
--- TRILHA 2 — Desenvolvimento Web (lições 11–20)
--- starter_code em formato JSON: {"html":"...","css":"...","js":"..."}
--- ════════════════════════════════════════════════════════════════════════════
+-- ── Trilha 2 — Módulo 1: HTML Estrutural (lesson 33) ─────────────────────
 
--- ── Lição 11: Introdução ao Desenvolvimento Web ───────────────────────────────
 INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
 (11,
- 'Introdução ao Desenvolvimento Web',
- 'Visão geral sobre como páginas web funcionam e o papel de cada tecnologia.',
- 'Baixa',
- 11,
+ 'Desafio: Página de Perfil HTML',
+ 'Construa uma página de perfil completa usando tags semânticas HTML.',
+ 'Alta',
+ 33,
  'web',
- 'Você está criando sua primeira página web completa! Na aba HTML, escreva a estrutura da página. Na aba CSS, aplique estilos. Na aba JS, adicione um console.log de boas-vindas. Clique em Visualizar para ver o resultado das três tecnologias juntas.',
- $code${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Desenvolvimento Web</title>\n</head>\n<body>\n  <h1>Desenvolvimento Web</h1>\n  <p>HTML define a <strong>estrutura</strong> do conteúdo.</p>\n  <p>CSS define a <strong>aparência</strong> dos elementos.</p>\n  <p>JavaScript adiciona <strong>comportamento</strong> à página.</p>\n</body>\n</html>","css":"body {\n  font-family: sans-serif;\n  max-width: 600px;\n  margin: 40px auto;\n  padding: 0 24px;\n  color: #333;\n}\n\nh1 {\n  color: #00b4cc;\n  border-bottom: 2px solid #00b4cc;\n  padding-bottom: 8px;\n}\n\nstrong {\n  color: #00b4cc;\n}","js":"// Opcional: adicione interatividade\nconsole.log('Desenvolvimento Web carregado!');"}$code$);
+ 'Crie uma página de perfil pessoal usando HTML semântico: (1) use <header>, <main>, <section> e <footer>; (2) adicione uma foto com <img> e texto alternativo; (3) crie uma lista de habilidades com <ul>; (4) adicione uma tabela de experiências com <table>; (5) insira links de redes sociais com <a>.',
+$json${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Meu Perfil</title>\n</head>\n<body>\n\n  <header>\n    <h1>Seu Nome</h1>\n    <p>Desenvolvedor Web</p>\n  </header>\n\n  <main>\n    <section id=\"sobre\">\n      <img src=\"foto.jpg\" alt=\"Foto de perfil\">\n      <p>Escreva uma breve descricao sobre voce aqui.</p>\n    </section>\n\n    <section id=\"habilidades\">\n      <h2>Habilidades</h2>\n      <ul>\n        <li>HTML</li>\n        <li>CSS</li>\n        <li>JavaScript</li>\n      </ul>\n    </section>\n\n    <section id=\"experiencia\">\n      <h2>Experiencia</h2>\n      <table>\n        <tr><th>Empresa</th><th>Cargo</th><th>Periodo</th></tr>\n        <tr><td>Empresa A</td><td>Dev Jr</td><td>2023-2024</td></tr>\n      </table>\n    </section>\n  </main>\n\n  <footer>\n    <a href=\"#\">LinkedIn</a> | <a href=\"#\">GitHub</a>\n  </footer>\n\n</body>\n</html>","css":"","js":""}$json$);
 
--- ── Lição 12: Estrutura Básica do HTML ────────────────────────────────────────
+-- ── Trilha 2 — Módulo 2: CSS Estilização (lesson 35) ─────────────────────
+
 INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
 (12,
- 'Estrutura Básica do HTML',
- 'Aprendendo a criar a base de um documento HTML.',
- 'Média',
- 12,
+ 'Desafio: Card Estilizado com CSS',
+ 'Estilize um card de produto usando seletores, box model e Flexbox.',
+ 'Alta',
+ 35,
  'web',
- 'Construa a estrutura completa de um documento HTML. Na aba HTML: inclua DOCTYPE, html, head (com title e meta charset) e body. Dentro do body, adicione um título h1, dois parágrafos descrevendo você e um rodapé. Estilize na aba CSS.',
- $code${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Minha Primeira Página</title>\n</head>\n<body>\n\n  <!-- Adicione um título h1, dois parágrafos e um rodapé aqui -->\n\n</body>\n</html>","css":"body {\n  font-family: sans-serif;\n  margin: 0;\n  padding: 24px;\n  background: #f5f5f5;\n}\n\n/* Estilize os elementos que você adicionar */","js":"// Deixe vazio por enquanto"}$code$);
+ 'Crie um card de produto com CSS: (1) use Flexbox para centralizar o card na tela; (2) aplique border-radius, box-shadow e padding no card; (3) estilize o titulo com uma cor destacada; (4) adicione um botao com hover state; (5) use variaveis CSS (--cor-primaria) para as cores principais.',
+$json${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Card de Produto</title>\n</head>\n<body>\n\n  <div class=\"container\">\n    <div class=\"card\">\n      <div class=\"card-badge\">Novo</div>\n      <h2 class=\"card-title\">Nome do Produto</h2>\n      <p class=\"card-desc\">Descricao breve do produto.</p>\n      <div class=\"card-price\">R$ 99,90</div>\n      <button class=\"card-btn\">Comprar</button>\n    </div>\n  </div>\n\n</body>\n</html>","css":":root {\n  --cor-primaria: #00b4cc;\n}\n\nbody {\n  margin: 0;\n  font-family: sans-serif;\n  background: #f0f4f8;\n}\n\n.container {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  min-height: 100vh;\n}\n\n.card {\n  background: white;\n  border-radius: 16px;\n  padding: 32px;\n  box-shadow: 0 4px 24px rgba(0,0,0,0.1);\n  width: 280px;\n}\n\n.card-btn {\n  background: var(--cor-primaria);\n  color: white;\n  border: none;\n  padding: 12px 24px;\n  border-radius: 8px;\n  cursor: pointer;\n  width: 100%;\n}\n\n.card-btn:hover {\n  opacity: 0.85;\n}","js":""}$json$);
 
--- ── Lição 13: Textos e Elementos Semânticos ───────────────────────────────────
+-- ── Trilha 3 — Módulo 1: JavaScript no Navegador (lesson 38) ─────────────
+
 INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
 (13,
- 'Textos e Elementos Semânticos',
- 'Uso de títulos, parágrafos e tags semânticas.',
- 'Baixa',
- 13,
+ 'Desafio: Lista de Tarefas Interativa',
+ 'Manipule o DOM para criar uma lista de tarefas com JavaScript.',
+ 'Alta',
+ 38,
  'web',
- 'Crie uma página usando tags semânticas. Na aba HTML: utilize header (com h1), main (com section e article) e footer. Cada área deve ter conteúdo relevante. Na aba CSS: estilize visualmente as diferentes áreas com cores e espaçamentos distintos.',
- $code${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Elementos Semânticos</title>\n</head>\n<body>\n\n  <header>\n    <h1>Meu Site</h1>\n    <p>Slogan do site</p>\n  </header>\n\n  <main>\n    <section>\n      <h2>Seção Principal</h2>\n      <article>\n        <h3>Artigo 1</h3>\n        <p>Conteúdo do artigo aqui.</p>\n      </article>\n    </section>\n  </main>\n\n  <footer>\n    <p>© 2025 Meu Site</p>\n  </footer>\n\n</body>\n</html>","css":"body {\n  font-family: sans-serif;\n  margin: 0;\n}\n\nheader {\n  background: #00b4cc;\n  color: white;\n  padding: 24px;\n}\n\nmain {\n  max-width: 800px;\n  margin: 24px auto;\n  padding: 0 24px;\n}\n\narticle {\n  background: white;\n  border: 1px solid #e0e0e0;\n  border-radius: 8px;\n  padding: 16px;\n  margin-bottom: 16px;\n}\n\nfooter {\n  background: #333;\n  color: white;\n  text-align: center;\n  padding: 16px;\n  margin-top: 24px;\n}","js":"// Deixe vazio por enquanto"}$code$);
+ 'Crie uma lista de tarefas funcional: (1) ao clicar em Adicionar, insira uma nova tarefa na lista; (2) ao clicar em uma tarefa, marque-a como concluida (riscada); (3) adicione um botao X em cada tarefa para remove-la; (4) exiba o total de tarefas pendentes atualizado dinamicamente.',
+$json${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Lista de Tarefas</title>\n  <style>\n    body { font-family: sans-serif; max-width: 400px; margin: 40px auto; }\n    .done { text-decoration: line-through; color: #999; }\n    li { display: flex; justify-content: space-between; padding: 8px 0; }\n    #contador { color: #666; font-size: 14px; }\n  </style>\n</head>\n<body>\n  <h1>Minhas Tarefas</h1>\n  <div>\n    <input id=\"input\" type=\"text\" placeholder=\"Nova tarefa...\">\n    <button id=\"btnAdd\">Adicionar</button>\n  </div>\n  <p id=\"contador\">0 pendentes</p>\n  <ul id=\"lista\"></ul>\n  <script src=\"script.js\"></script>\n</body>\n</html>","css":"","js":"const input = document.getElementById('input');\nconst btnAdd = document.getElementById('btnAdd');\nconst lista = document.getElementById('lista');\nconst contador = document.getElementById('contador');\n\nfunction atualizarContador() {\n  const pendentes = lista.querySelectorAll('li:not(.done)').length;\n  contador.textContent = pendentes + ' pendentes';\n}\n\nbtnAdd.addEventListener('click', function() {\n  const texto = input.value.trim();\n  if (!texto) { return; }\n\n  const li = document.createElement('li');\n  const span = document.createElement('span');\n  span.textContent = texto;\n  span.addEventListener('click', function() {\n    li.classList.toggle('done');\n    atualizarContador();\n  });\n\n  const btn = document.createElement('button');\n  btn.textContent = 'X';\n  btn.addEventListener('click', function() {\n    li.remove();\n    atualizarContador();\n  });\n\n  li.appendChild(span);\n  li.appendChild(btn);\n  lista.appendChild(li);\n  input.value = '';\n  atualizarContador();\n});\n"}$json$);
 
--- ── Lição 14: Links e Imagens ─────────────────────────────────────────────────
+-- ── Trilha 3 — Módulo 2: Projeto Prático (lesson 40) ─────────────────────
+
 INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
 (14,
- 'Links e Imagens',
- 'Inserindo navegação e conteúdo visual em páginas web.',
- 'Baixa',
- 14,
- 'web',
- 'Crie uma página com um menu de navegação usando links <a>. Adicione ao menos uma imagem com <img> e atributo alt descritivo. Estilize o menu e a imagem com CSS. Use href="#" para links que não levam a lugar algum.',
- $code${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Links e Imagens</title>\n</head>\n<body>\n\n  <nav>\n    <a href=\"#\">Início</a>\n    <a href=\"#\">Sobre</a>\n    <a href=\"#\">Contato</a>\n  </nav>\n\n  <main>\n    <h1>Galeria</h1>\n    <img src=\"https://picsum.photos/600/300\" alt=\"Imagem de exemplo\">\n    <p>Adicione mais imagens e links abaixo.</p>\n  </main>\n\n</body>\n</html>","css":"body {\n  font-family: sans-serif;\n  margin: 0;\n}\n\nnav {\n  background: #00b4cc;\n  padding: 12px 24px;\n  display: flex;\n  gap: 16px;\n}\n\nnav a {\n  color: white;\n  text-decoration: none;\n  font-weight: 600;\n}\n\nnav a:hover {\n  text-decoration: underline;\n}\n\nmain {\n  max-width: 800px;\n  margin: 24px auto;\n  padding: 0 24px;\n}\n\nimg {\n  width: 100%;\n  border-radius: 8px;\n  margin-top: 16px;\n}","js":"// Deixe vazio por enquanto"}$code$);
-
--- ── Lição 15: Listas e Tabelas ────────────────────────────────────────────────
-INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(15,
- 'Listas e Tabelas',
- 'Organizando informações em listas ordenadas, não ordenadas e tabelas.',
- 'Média',
- 15,
- 'web',
- 'Na aba HTML, crie: (1) uma lista não ordenada com 4 frutas, (2) uma lista ordenada com 3 passos para aprender HTML, (3) uma tabela com cabeçalho e 3 linhas de dados sobre tecnologias. Estilize tudo com CSS.',
- $code${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Listas e Tabelas</title>\n</head>\n<body>\n  <div class=\"container\">\n    <h1>Listas e Tabelas</h1>\n\n    <h2>Frutas favoritas</h2>\n    <ul>\n      <li>Manga</li>\n      <li>Morango</li>\n      <li>Abacaxi</li>\n    </ul>\n\n    <h2>Como criar uma página web</h2>\n    <ol>\n      <li>Crie um arquivo .html</li>\n      <li>Adicione a estrutura básica</li>\n      <li>Adicione conteúdo ao body</li>\n    </ol>\n\n    <h2>Tecnologias</h2>\n    <table>\n      <thead>\n        <tr><th>Tecnologia</th><th>Ano</th></tr>\n      </thead>\n      <tbody>\n        <tr><td>HTML</td><td>1991</td></tr>\n        <tr><td>CSS</td><td>1996</td></tr>\n        <tr><td>JavaScript</td><td>1995</td></tr>\n      </tbody>\n    </table>\n  </div>\n</body>\n</html>","css":"body {\n  font-family: sans-serif;\n  background: #f5f5f5;\n  margin: 0;\n  padding: 24px;\n}\n\n.container {\n  max-width: 600px;\n  margin: 0 auto;\n  background: white;\n  padding: 24px;\n  border-radius: 12px;\n}\n\nh1 { color: #00b4cc; }\n\nul, ol { padding-left: 20px; line-height: 2; }\n\ntable {\n  width: 100%;\n  border-collapse: collapse;\n  margin-top: 8px;\n}\n\nth {\n  background: #00b4cc;\n  color: white;\n  padding: 10px;\n  text-align: left;\n}\n\ntd {\n  padding: 10px;\n  border-bottom: 1px solid #e0e0e0;\n}\n\ntr:hover { background: #f0f4f8; }","js":"// Deixe vazio por enquanto"}$code$);
-
--- ── Lição 16: Fundamentos do CSS ──────────────────────────────────────────────
-INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(16,
- 'Fundamentos do CSS',
- 'Primeiros passos na estilização de páginas web.',
- 'Média',
- 16,
- 'web',
- 'Pratique as propriedades CSS fundamentais! Na aba CSS, estilize o container, o título, o parágrafo, o botão e a caixa já existentes no HTML. Use: color, background-color, font-size, padding, margin, border e border-radius. Tente pelo menos 5 propriedades diferentes em cada elemento.',
- $code${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Fundamentos do CSS</title>\n</head>\n<body>\n  <div class=\"container\">\n    <h1>Meu Título</h1>\n    <p>Este é um parágrafo de exemplo para você estilizar com CSS.</p>\n    <button class=\"botao\">Clique aqui</button>\n    <div class=\"caixa\">Esta é uma caixa</div>\n  </div>\n</body>\n</html>","css":"/* Estilize cada elemento abaixo! */\n\nbody {\n  background: #f0f4f8;\n  font-family: sans-serif;\n  margin: 0;\n  padding: 24px;\n}\n\n.container {\n  max-width: 500px;\n  margin: 0 auto;\n  background: white;\n  padding: 32px;\n  border-radius: 12px;\n}\n\nh1 {\n  /* Adicione: color, font-size */\n  color: #00b4cc;\n}\n\np {\n  /* Adicione: line-height, color */\n}\n\n.botao {\n  /* Adicione: background-color, color, padding, border, border-radius, cursor */\n}\n\n.caixa {\n  /* Adicione: background, padding, margin-top, border */\n}","js":"// Deixe vazio por enquanto"}$code$);
-
--- ── Lição 17: Seletores e Classes ─────────────────────────────────────────────
-INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(17,
- 'Seletores e Classes',
- 'Aplicando estilos em elementos específicos da página.',
- 'Média',
- 17,
- 'web',
- 'Use os três tipos de seletores CSS: (1) seletor de tag — estilize todas as tags p, (2) seletor de classe — estilize .card, .btn-primary e .btn-secondary com cores diferentes, (3) seletor de ID — destaque o #destaque com fundo colorido. Crie estilos bem distintos para cada tipo.',
- $code${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Seletores e Classes</title>\n</head>\n<body>\n\n  <div id=\"destaque\">\n    <h1>Elemento em Destaque</h1>\n    <p>Este elemento tem um ID único.</p>\n  </div>\n\n  <div class=\"card\">\n    <h2>Card 1</h2>\n    <p>Conteúdo do primeiro card.</p>\n    <button class=\"btn-primary\">Ação principal</button>\n  </div>\n\n  <div class=\"card\">\n    <h2>Card 2</h2>\n    <p>Conteúdo do segundo card.</p>\n    <button class=\"btn-secondary\">Ação secundária</button>\n  </div>\n\n</body>\n</html>","css":"body {\n  font-family: sans-serif;\n  padding: 24px;\n  background: #f0f4f8;\n}\n\n/* Seletor de ID */\n#destaque {\n  background: #00b4cc;\n  color: white;\n  padding: 24px;\n  border-radius: 8px;\n  margin-bottom: 16px;\n}\n\n/* Seletor de classe */\n.card {\n  background: white;\n  padding: 24px;\n  border-radius: 8px;\n  margin-bottom: 16px;\n  box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n}\n\n/* Complete os estilos dos botões */\n.btn-primary {\n  padding: 10px 20px;\n  border: none;\n  border-radius: 6px;\n  cursor: pointer;\n  /* Adicione: background-color, color */\n}\n\n.btn-secondary {\n  padding: 10px 20px;\n  border: none;\n  border-radius: 6px;\n  cursor: pointer;\n  /* Adicione cores diferentes de btn-primary */\n}","js":"// Deixe vazio por enquanto"}$code$);
-
--- ── Lição 18: Box Model e Espaçamentos ────────────────────────────────────────
-INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(18,
- 'Box Model e Espaçamentos',
- 'Entendendo margin, padding, border e content.',
- 'Baixa',
- 18,
- 'web',
- 'Pratique o Box Model! Na aba CSS, para cada .card: defina width, adicione padding interno, margin entre os cards, border e border-radius. Use box-sizing: border-box para que padding e border sejam incluídos na largura. Experimente diferentes valores e veja o efeito no preview.',
- $code${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Box Model</title>\n</head>\n<body>\n  <h1>Box Model na prática</h1>\n  <div class=\"card\">Card 1 — área de conteúdo</div>\n  <div class=\"card\">Card 2 — área de conteúdo</div>\n  <div class=\"card\">Card 3 — área de conteúdo</div>\n</body>\n</html>","css":"body {\n  font-family: sans-serif;\n  background: #f0f4f8;\n  padding: 24px;\n}\n\n.card {\n  background: white;\n\n  /* Experimente mudar estes valores! */\n  width: 300px;\n  padding: 16px;       /* espaço interno */\n  margin: 12px 0;      /* espaço externo */\n  border: 2px solid #00b4cc;\n  border-radius: 8px;\n\n  /* Inclui padding e border na largura total */\n  box-sizing: border-box;\n}","js":"// Deixe vazio por enquanto"}$code$);
-
--- ── Lição 19: Introdução ao JavaScript no HTML ────────────────────────────────
-INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(19,
- 'Introdução ao JavaScript no HTML',
- 'Conectando scripts à página para adicionar comportamento.',
+ 'Desafio: Calculadora Web Completa',
+ 'Construa uma calculadora web com HTML, CSS e JavaScript integrados.',
  'Alta',
- 19,
+ 40,
  'web',
- 'Na aba JS, selecione os elementos pelo ID usando document.getElementById(). Adicione eventos de clique aos botões: quando "Mudar texto" for clicado, altere o textContent do parágrafo #mensagem e mude sua cor. Quando "Resetar" for clicado, volte ao texto e cor originais.',
- $code${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>JavaScript no HTML</title>\n</head>\n<body>\n  <div class=\"container\">\n    <h1>Manipulação do DOM</h1>\n    <p id=\"mensagem\">Clique no botão para mudar este texto.</p>\n    <button id=\"btn-mudar\">Mudar texto</button>\n    <button id=\"btn-resetar\">Resetar</button>\n  </div>\n</body>\n</html>","css":"body {\n  font-family: sans-serif;\n  display: flex;\n  justify-content: center;\n  padding: 40px 24px;\n  background: #f0f4f8;\n}\n\n.container {\n  background: white;\n  padding: 32px;\n  border-radius: 12px;\n  text-align: center;\n  max-width: 400px;\n  width: 100%;\n}\n\n#mensagem {\n  font-size: 1.1rem;\n  color: #555;\n  margin: 16px 0;\n}\n\nbutton {\n  margin: 4px;\n  padding: 10px 20px;\n  border: none;\n  border-radius: 6px;\n  cursor: pointer;\n  font-size: 1rem;\n}\n\n#btn-mudar { background: #00b4cc; color: white; }\n#btn-resetar { background: #e0e0e0; color: #333; }","js":"// Selecione os elementos\nvar mensagem   = document.getElementById('mensagem');\nvar btnMudar   = document.getElementById('btn-mudar');\nvar btnResetar = document.getElementById('btn-resetar');\n\nvar textoOriginal = mensagem.textContent;\n\n// Adicione os eventos de clique abaixo\nbtnMudar.addEventListener('click', function() {\n  // Complete: mude o textContent e a cor de 'mensagem'\n});\n\nbtnResetar.addEventListener('click', function() {\n  // Complete: volte ao texto e cor originais\n});"}$code$);
+ 'Crie uma calculadora funcional: (1) exiba um display com o numero atual; (2) adicione botoes 0-9, operadores (+, -, *, /), ponto decimal, CE e =; (3) implemente a logica de calculo em JavaScript; (4) estilize com CSS Grid para o teclado numerico; (5) trate divisao por zero exibindo Erro.',
+$json${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Calculadora</title>\n</head>\n<body>\n  <div class=\"calc\">\n    <div id=\"display\">0</div>\n    <div class=\"teclado\">\n      <button class=\"btn-op\" data-action=\"clear\">CE</button>\n      <button class=\"btn-op\" data-op=\"/\">div</button>\n      <button class=\"btn-op\" data-op=\"*\">x</button>\n      <button class=\"btn-op\" data-op=\"-\">-</button>\n      <button data-num=\"7\">7</button>\n      <button data-num=\"8\">8</button>\n      <button data-num=\"9\">9</button>\n      <button class=\"btn-op\" data-op=\"+\">+</button>\n      <button data-num=\"4\">4</button>\n      <button data-num=\"5\">5</button>\n      <button data-num=\"6\">6</button>\n      <button data-num=\"1\">1</button>\n      <button data-num=\"2\">2</button>\n      <button data-num=\"3\">3</button>\n      <button class=\"btn-eq\" data-action=\"calc\">=</button>\n      <button data-num=\"0\">0</button>\n      <button data-num=\".\">.</button>\n    </div>\n  </div>\n  <script src=\"script.js\"></script>\n</body>\n</html>","css":"body { display:flex; justify-content:center; align-items:center; min-height:100vh; background:#1a1a2e; }\n.calc { background:#16213e; border-radius:16px; padding:20px; width:260px; }\n#display { background:#0f3460; color:#e0e0e0; font-size:32px; text-align:right; padding:16px; border-radius:8px; margin-bottom:12px; }\n.teclado { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }\nbutton { padding:16px; font-size:18px; border:none; border-radius:8px; cursor:pointer; background:#1a1a2e; color:#fff; }\nbutton:hover { background:#00b4cc; }\n.btn-op { color:#00dffc; }\n.btn-eq { background:#00b4cc; }","js":"var display = document.getElementById('display');\nvar expr = '';\n\ndocument.querySelectorAll('button').forEach(function(btn) {\n  btn.addEventListener('click', function() {\n    var num = btn.dataset.num;\n    var op  = btn.dataset.op;\n    var act = btn.dataset.action;\n\n    if (num !== undefined) {\n      expr += num;\n      display.textContent = expr;\n    } else if (op) {\n      expr += op;\n      display.textContent = expr;\n    } else if (act === 'clear') {\n      expr = '';\n      display.textContent = '0';\n    } else if (act === 'calc') {\n      try {\n        var result = eval(expr);\n        display.textContent = isFinite(result) ? result : 'Erro';\n        expr = isFinite(result) ? String(result) : '';\n      } catch(e) {\n        display.textContent = 'Erro';\n        expr = '';\n      }\n    }\n  });\n});\n"}$json$);
 
--- ── Lição 20: Eventos e Interatividade ────────────────────────────────────────
-INSERT INTO tb_kanban_templates (id, title, description, priority, lesson_id, language, challenge_instructions, starter_code) VALUES
-(20,
- 'Eventos e Interatividade',
- 'Criando páginas que respondem às ações do usuário.',
- 'Alta',
- 20,
- 'web',
- 'Complete o contador interativo! Na aba JS, os event listeners já estão parcialmente escritos. Complete cada um: btn-inc deve incrementar o valor em 1, btn-dec deve decrementar em 1 e btn-reset deve voltar a 0. Após cada operação, atualize o display.textContent com o novo valor.',
- $code${"html":"<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Contador Interativo</title>\n</head>\n<body>\n  <div class=\"contador-container\">\n    <h1>Contador</h1>\n    <div id=\"display\" class=\"display\">0</div>\n    <div class=\"botoes\">\n      <button id=\"btn-dec\">-</button>\n      <button id=\"btn-reset\">R</button>\n      <button id=\"btn-inc\">+</button>\n    </div>\n  </div>\n</body>\n</html>","css":"body {\n  font-family: sans-serif;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  min-height: 100vh;\n  margin: 0;\n  background: #f0f4f8;\n}\n\n.contador-container {\n  background: white;\n  padding: 40px;\n  border-radius: 16px;\n  text-align: center;\n  box-shadow: 0 4px 16px rgba(0,0,0,0.1);\n}\n\n.display {\n  font-size: 4rem;\n  font-weight: 800;\n  color: #00b4cc;\n  margin: 16px 0;\n}\n\n.botoes {\n  display: flex;\n  gap: 12px;\n  justify-content: center;\n  margin-top: 16px;\n}\n\n.botoes button {\n  width: 50px;\n  height: 50px;\n  border: none;\n  border-radius: 50%;\n  font-size: 1.4rem;\n  cursor: pointer;\n  background: #00b4cc;\n  color: white;\n  transition: background 0.2s;\n}\n\n.botoes button:hover { background: #008c9e; }\n#btn-reset { background: #e0e0e0; color: #333; }\n#btn-reset:hover { background: #ccc; }","js":"var valor = 0;\nvar display = document.getElementById('display');\n\ndocument.getElementById('btn-inc').addEventListener('click', function() {\n  // Complete: incremente valor e atualize display\n});\n\ndocument.getElementById('btn-dec').addEventListener('click', function() {\n  // Complete: decremente valor e atualize display\n});\n\ndocument.getElementById('btn-reset').addEventListener('click', function() {\n  // Complete: resets valor para 0 e atualize display\n});"}$code$);
-
--- ════════════════════════════════════════════════════════════════════════════
--- RESET DE SEQUENCE
--- ════════════════════════════════════════════════════════════════════════════
-
-SELECT setval('tb_kanban_templates_id_seq', (SELECT MAX(id) FROM tb_kanban_templates));
+-- Atualizar sequência
+SELECT setval('tb_kanban_templates_id_seq', 14, true);

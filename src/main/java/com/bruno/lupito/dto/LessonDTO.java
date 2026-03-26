@@ -6,6 +6,8 @@ public class LessonDTO {
     private Long id;
     private String title;
     private String theoryContent;
+    private String codeExample;
+    private String codeLanguage;
     private Integer listOrder;
     private Long sectionId;
 
@@ -24,6 +26,8 @@ public class LessonDTO {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.theoryContent = entity.getTheoryContent();
+        this.codeExample = entity.getCodeExample();
+        this.codeLanguage = entity.getCodeLanguage();
         this.listOrder = entity.getListOrder();
         this.sectionId = entity.getSection() != null ? entity.getSection().getId() : null;
     }
@@ -50,6 +54,22 @@ public class LessonDTO {
 
     public void setTheoryContent(String theoryContent) {
         this.theoryContent = theoryContent;
+    }
+
+    public String getCodeExample() {
+        return codeExample;
+    }
+
+    public void setCodeExample(String codeExample) {
+        this.codeExample = codeExample;
+    }
+
+    public String getCodeLanguage() {
+        return codeLanguage;
+    }
+
+    public void setCodeLanguage(String codeLanguage) {
+        this.codeLanguage = codeLanguage;
     }
 
     public Integer getListOrder() {
