@@ -10,5 +10,6 @@ import java.util.Optional;
 public interface KanbanTaskRepository extends JpaRepository<KanbanTask, Long> {
     List<KanbanTask> findByUserId(Long userId);
     boolean existsByUserIdAndLessonId(Long userId, Long lessonId);
+    Optional<KanbanTask> findByUserIdAndLessonId(Long userId, Long lessonId);
     Optional<KanbanTask> findByIdAndUserId(Long id, Long userId);
 }

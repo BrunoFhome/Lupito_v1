@@ -14,23 +14,16 @@ import com.bruno.lupito.dto.request.AIEvaluationRequest;
 public class AIService {
 
     private static final String GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-    private static final String MODEL    = "llama-3.1-8b-instant";
+    private static final String MODEL    = "llama-3.3-70b-versatile";
     private static final String SYS_PROMPT = """
-            Você é um mentor de programação da plataforma Lupito, especializado em ensinar estudantes iniciantes.
-            Avalie o código do estudante com base no desafio proposto e responda em português.
-            Estruture sua resposta com estas três seções:
+            Você é um tutor de programação da plataforma Lupito avaliando o código de um iniciante.
 
-            ## Resultado
-            O código resolve o desafio? Responda "Sim", "Não" ou "Parcialmente" e explique brevemente.
+            Analise se o código resolve o desafio proposto e responda em português com no máximo 3 frases:
+            - Frase 1: comece com ✓, ✗ ou ⚠ e diga se o código resolve o desafio, explicando brevemente o porquê.
+            - Frase 2: aponte uma melhoria concreta e específica para o código atual (não genérica).
+            - Frase 3 (opcional): só inclua se houver um segundo ponto realmente relevante.
 
-            ## Boas Práticas
-            Liste até 3 pontos de melhoria (nomenclatura, legibilidade, eficiência).
-            Se o código já estiver ótimo, diga isso com entusiasmo.
-
-            ## Sugestão
-            Dê uma dica concreta ou alternativa de implementação com um pequeno exemplo de código.
-
-            Seja encorajador, didático e conciso. Limite a resposta a 300 palavras.
+            Sem markdown, sem listas, sem títulos. Seja direto e didático para iniciantes.
             """;
 
     @Value("${groq.api.key:}")
@@ -54,7 +47,7 @@ public class AIService {
 
         var body = Map.of(
                 "model", MODEL,
-                "max_tokens", 800,
+                "max_tokens", 250,
                 "temperature", 0.3,
                 "messages", List.of(
                         Map.of("role", "system", "content", SYS_PROMPT),

@@ -88,6 +88,7 @@ CREATE TABLE tb_kanban_templates (
     challenge_instructions TEXT,
     starter_code           TEXT,
     language               VARCHAR(20)  NOT NULL DEFAULT 'javascript',
+    expected_output        TEXT,
     CONSTRAINT fk_template_lesson FOREIGN KEY (lesson_id) REFERENCES tb_lessons(id) ON DELETE CASCADE
 );
 
@@ -105,6 +106,7 @@ CREATE TABLE tb_kanban_tasks (
     starter_code           TEXT,
     user_code              TEXT,
     language               VARCHAR(20)  NOT NULL DEFAULT 'javascript',
+    expected_output        TEXT,
     CONSTRAINT fk_kanban_user   FOREIGN KEY (user_id)   REFERENCES tb_users(id)   ON DELETE CASCADE,
     CONSTRAINT fk_kanban_lesson FOREIGN KEY (lesson_id) REFERENCES tb_lessons(id) ON DELETE CASCADE
 );

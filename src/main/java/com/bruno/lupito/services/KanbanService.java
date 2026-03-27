@@ -51,6 +51,14 @@ public class KanbanService {
                     newTask.setLanguage(template.getLanguage() != null ? template.getLanguage() : "javascript");
                     newTask.setExpectedOutput(template.getExpectedOutput());
                     taskRepository.save(newTask);
+                } else if (template.getExpectedOutput() != null) {
+                    // Propaga expectedOutput para tarefas existentes que ainda não têm o campo preenchido
+                    taskRepository.findByUserIdAndLessonId(user.getId(), lessonId).ifPresent(existing -> {
+                        if (existing.getExpectedOutput() == null) {
+                            existing.setExpectedOutput(template.getExpectedOutput());
+                            taskRepository.save(existing);
+                        }
+                    });
                 }
             }
         }
