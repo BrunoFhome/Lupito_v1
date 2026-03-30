@@ -1,8 +1,6 @@
 package com.bruno.lupito.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,20 +20,6 @@ public class UserService {
 	@Transactional(readOnly = true)
 	public UserDTO findById(Long id) {
 		User user = repository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado"));
-		return new UserDTO(user);
-	}
-	
-	@Transactional(readOnly = true)
-	public Page<UserDTO> findAll(Pageable pageable){ 
-		Page<User> client = repository.findAll(pageable);
-		return client.map(x -> new UserDTO(x));
-	}
-	
-	@Transactional
-	public UserDTO insert(UserDTO dto) {
-		User user = new User();
-		copyDtoToEntity(dto, user);
-		user = repository.save(user);
 		return new UserDTO(user);
 	}
 	
@@ -66,7 +50,6 @@ public class UserService {
 	private void copyDtoToEntity(UserDTO dto, User user) {
 		user.setName(dto.getName());
 		user.setEmail(dto.getEmail());
-		user.setPassword(dto.getPassword());
 		user.setBio(dto.getBio());
 		user.setCity(dto.getCity());
 		user.setState(dto.getState());

@@ -45,7 +45,6 @@ public class UserDTO {
 		id = entity.getId();
 		name = entity.getName();
 		email = entity.getEmail();
-		password = entity.getPassword();
 		bio = entity.getBio();
                 learningProgress = entity.getLearningProgress();
                 currentStreak = entity.getCurrentStreak() != null ? entity.getCurrentStreak() : 0;
