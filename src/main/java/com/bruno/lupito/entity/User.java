@@ -46,6 +46,9 @@ public class User implements UserDetails {
     @Column(name = "last_study_date")
     private LocalDate lastStudyDate;
 
+    @Column(name = "email_verified", nullable = false)
+    private boolean emailVerified = false;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -89,7 +92,7 @@ public class User implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return emailVerified;
 	}
 
 }

@@ -46,6 +46,8 @@ public class SecurityConfig {
 					.requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
 					.requestMatchers(HttpMethod.POST, "/auth/forgot-password").permitAll()
 					.requestMatchers(HttpMethod.POST, "/auth/reset-password").permitAll()
+					.requestMatchers(HttpMethod.GET, "/auth/verify-email").permitAll()
+					.requestMatchers(HttpMethod.POST, "/auth/resend-verification").permitAll()
 					.requestMatchers("/test-temp**").permitAll()
 					.anyRequest().authenticated())
 				.exceptionHandling(ex -> ex

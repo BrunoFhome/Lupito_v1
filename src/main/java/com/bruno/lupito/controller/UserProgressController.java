@@ -3,6 +3,7 @@ package com.bruno.lupito.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +15,12 @@ import com.bruno.lupito.config.JWTUserData;
 import com.bruno.lupito.dto.UserProgressDTO;
 import com.bruno.lupito.services.UserProgressService;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 @RestController
 @RequestMapping(value = "/api/progress")
+@Validated
 public class UserProgressController {
 
     @Autowired
@@ -33,9 +38,9 @@ public class UserProgressController {
 
     @PostMapping(value = "/complete-lesson")
     public ResponseEntity<UserProgressDTO> completeLesson(
-            @RequestParam Long courseId,
-            @RequestParam Integer currentSectionOrder,
-            @RequestParam Integer currentLessonOrder,
+            @RequestParam @NotNull(message = "courseId é obrigatório") Long courseId,
+            @RequestParam @Min(value = 1, message = "currentSectionOrder deve ser >= 1") Integer currentSectionOrder,
+            @RequestParam @Min(value = 1, message = "currentLessonOrder deve ser >= 1") Integer currentLessonOrder,
             Authentication auth) {
         JWTUserData userData = (JWTUserData) auth.getPrincipal();
         UserProgressDTO dto = service.completeLesson(userData.userId(), courseId, currentSectionOrder, currentLessonOrder);

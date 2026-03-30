@@ -3,11 +3,14 @@ package com.bruno.lupito.controller.exception;
 import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
+
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -61,6 +64,13 @@ public class GlobalExceptionHandler {
                 .body(new ErroResposta(401, "Não autorizado", "E-mail ou senha incorretos."));
     }
 
+    @ExceptionHandler(DisabledException.class)
+    public ResponseEntity<ErroResposta> handleContaDesativada(DisabledException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new ErroResposta(403, "E-mail não verificado",
+                        "Verifique seu e-mail para ativar sua conta."));
+    }
+
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ErroResposta> handleAutenticacao(AuthenticationException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -79,6 +89,19 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErroResposta> handleValidacaoCampos(MethodArgumentNotValidException ex) {
         String campos = ex.getBindingResult().getFieldErrors().stream()
                 .map(err -> err.getField() + ": " + err.getDefaultMessage())
+                .collect(Collectors.joining("; "));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErroResposta(400, "Dados inválidos", campos));
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErroResposta> handleConstraintViolation(ConstraintViolationException ex) {
+        String campos = ex.getConstraintViolations().stream()
+                .map(cv -> {
+                    String path = cv.getPropertyPath().toString();
+                    String param = path.contains(".") ? path.substring(path.lastIndexOf('.') + 1) : path;
+                    return param + ": " + cv.getMessage();
+                })
                 .collect(Collectors.joining("; "));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErroResposta(400, "Dados inválidos", campos));

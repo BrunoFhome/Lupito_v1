@@ -6,9 +6,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bruno.lupito.config.TokenConfig;
@@ -20,6 +22,7 @@ import com.bruno.lupito.dto.response.LoginResponse;
 import com.bruno.lupito.dto.response.RegisterUserResponse;
 import com.bruno.lupito.entity.User;
 import com.bruno.lupito.repository.UserRepository;
+import com.bruno.lupito.services.EmailVerificationService;
 import com.bruno.lupito.services.PasswordResetService;
 
 import jakarta.validation.Valid;
@@ -33,15 +36,17 @@ public class AuthController {
 	private final AuthenticationManager authenticationManager;
 	private final TokenConfig tokenConfig;
 	private final PasswordResetService passwordResetService;
+	private final EmailVerificationService emailVerificationService;
 
 	public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder,
 			AuthenticationManager authenticationManager, TokenConfig tokenConfig,
-			PasswordResetService passwordResetService) {
+			PasswordResetService passwordResetService, EmailVerificationService emailVerificationService) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.authenticationManager = authenticationManager;
 		this.tokenConfig = tokenConfig;
 		this.passwordResetService = passwordResetService;
+		this.emailVerificationService = emailVerificationService;
 	}
 	
 	@PostMapping("/login")
@@ -63,10 +68,24 @@ public class AuthController {
 		newUser.setName(request.name());
 		newUser.setCity(request.city());
 		newUser.setState(request.state());
+		newUser.setEmailVerified(false);
 
 		userRepository.save(newUser);
+		emailVerificationService.sendVerificationEmail(newUser);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(new RegisterUserResponse(newUser.getName(), newUser.getEmail()));
+	}
+
+	@GetMapping("/verify-email")
+	public ResponseEntity<Void> verifyEmail(@RequestParam String token) {
+		emailVerificationService.verifyEmail(token);
+		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping("/resend-verification")
+	public ResponseEntity<Void> resendVerification(@RequestBody ForgotPasswordRequest request) {
+		emailVerificationService.resendVerification(request.email());
+		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping("/forgot-password")

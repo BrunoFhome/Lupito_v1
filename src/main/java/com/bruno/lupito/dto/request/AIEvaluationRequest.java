@@ -1,3 +1,8 @@
 package com.bruno.lupito.dto.request;
 
-public record AIEvaluationRequest(String code, String language, String challengeInstructions) {}
+import jakarta.validation.constraints.NotBlank;
+
+public record AIEvaluationRequest(
+        @NotBlank(message = "O código não pode estar vazio") String code,
+        String language,
+        String challengeInstructions) {}
