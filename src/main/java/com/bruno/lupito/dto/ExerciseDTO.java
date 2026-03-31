@@ -10,6 +10,7 @@ public class ExerciseDTO {
     private List<String> options = new ArrayList<>();
     private Integer correctAnswer;
     private Long lessonId;
+    private String type;
 
     public ExerciseDTO() {
     }
@@ -30,6 +31,7 @@ public class ExerciseDTO {
         }
         this.correctAnswer = entity.getCorrectAnswer();
         this.lessonId = entity.getLesson() != null ? entity.getLesson().getId() : null;
+        this.type = entity.getType() != null ? entity.getType() : "multiple-choice";
     }
 
     public Long getId() {
@@ -70,5 +72,13 @@ public class ExerciseDTO {
 
     public void setLessonId(Long lessonId) {
         this.lessonId = lessonId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

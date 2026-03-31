@@ -28,6 +28,9 @@ public class Exercise {
 
     private String question;
 
+    @Column(name = "type", length = 30)
+    private String type = "multiple-choice";
+
     @ElementCollection
     @CollectionTable(name = "tb_exercises_options", joinColumns = @JoinColumn(name = "exercise_id"))
     @Column(name = "options")
