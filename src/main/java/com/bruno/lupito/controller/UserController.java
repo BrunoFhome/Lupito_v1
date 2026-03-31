@@ -12,8 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.bruno.lupito.config.JWTUserData;
 import com.bruno.lupito.controller.exception.AcessoNegadoException;
+import com.bruno.lupito.dto.ActivityDayDTO;
 import com.bruno.lupito.dto.UserDTO;
 import com.bruno.lupito.services.UserService;
 import jakarta.validation.Valid;
@@ -56,6 +61,14 @@ public class UserController {
 		verificarPropriedade(id);
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping(value = "/{id}/activity")
+	public ResponseEntity<List<ActivityDayDTO>> getActivity(
+			@PathVariable Long id,
+			@RequestParam(defaultValue = "30") int days) {
+		verificarPropriedade(id);
+		return ResponseEntity.ok(service.getActivity(id, days));
 	}
 
 }

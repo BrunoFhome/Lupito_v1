@@ -46,6 +46,12 @@ public class User implements UserDetails {
     @Column(name = "last_study_date")
     private LocalDate lastStudyDate;
 
+    @Column(name = "github_url")
+    private String githubUrl;
+
+    @Column(name = "linkedin_url")
+    private String linkedinUrl;
+
     @Column(name = "email_verified", nullable = false)
     private boolean emailVerified = false;
 

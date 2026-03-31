@@ -23,6 +23,8 @@ public class UserDTO {
         private Integer currentStreak;
         private String city;
         private String state;
+        private String githubUrl;
+        private String linkedinUrl;
 
 
 	public UserDTO() {
@@ -50,6 +52,8 @@ public class UserDTO {
                 currentStreak = entity.getCurrentStreak() != null ? entity.getCurrentStreak() : 0;
                 city = entity.getCity();
                 state = entity.getState();
+                githubUrl = entity.getGithubUrl();
+                linkedinUrl = entity.getLinkedinUrl();
 	}
 
 
@@ -139,5 +143,11 @@ public class UserDTO {
         public void setState(String state) {
                 this.state = state;
         }
+
+        public String getGithubUrl() { return githubUrl; }
+        public void setGithubUrl(String githubUrl) { this.githubUrl = githubUrl; }
+
+        public String getLinkedinUrl() { return linkedinUrl; }
+        public void setLinkedinUrl(String linkedinUrl) { this.linkedinUrl = linkedinUrl; }
 
 }

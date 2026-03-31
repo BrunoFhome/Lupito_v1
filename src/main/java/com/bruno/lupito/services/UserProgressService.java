@@ -12,11 +12,13 @@ import com.bruno.lupito.dto.UserProgressDTO;
 import com.bruno.lupito.entity.Course;
 import com.bruno.lupito.entity.Lesson;
 import com.bruno.lupito.entity.Section;
+import com.bruno.lupito.entity.StudyActivity;
 import com.bruno.lupito.entity.User;
 import com.bruno.lupito.entity.UserProgress;
 import com.bruno.lupito.repository.CourseRepository;
 import com.bruno.lupito.repository.LessonRepository;
 import com.bruno.lupito.repository.SectionRepository;
+import com.bruno.lupito.repository.StudyActivityRepository;
 import com.bruno.lupito.repository.UserProgressRepository;
 import com.bruno.lupito.controller.exception.RecursoNaoEncontradoException;
 import com.bruno.lupito.repository.UserRepository;
@@ -38,6 +40,9 @@ public class UserProgressService {
 
     @Autowired
     private LessonRepository lessonRepository;
+
+    @Autowired
+    private StudyActivityRepository studyActivityRepository;
 
     @Transactional
     public Optional<UserProgressDTO> getUserProgress(Long userId, Long courseId) {
@@ -116,5 +121,21 @@ public class UserProgressService {
 
         user.setLastStudyDate(today);
         userRepository.save(user);
+
+        // Registra ou incrementa atividade do dia
+        studyActivityRepository.findByUserIdAndStudyDate(user.getId(), today)
+            .ifPresentOrElse(
+                activity -> {
+                    activity.setLessonsDone(activity.getLessonsDone() + 1);
+                    studyActivityRepository.save(activity);
+                },
+                () -> {
+                    StudyActivity newActivity = new StudyActivity();
+                    newActivity.setUser(user);
+                    newActivity.setStudyDate(today);
+                    newActivity.setLessonsDone(1);
+                    studyActivityRepository.save(newActivity);
+                }
+            );
     }
 }
