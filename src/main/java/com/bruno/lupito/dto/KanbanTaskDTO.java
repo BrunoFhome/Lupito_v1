@@ -14,6 +14,8 @@ public class KanbanTaskDTO {
     private String userCode;
     private String language;
     private String expectedOutput;
+    private String courseName;
+    private String moduleName;
 
     public KanbanTaskDTO() {}
 
@@ -29,6 +31,15 @@ public class KanbanTaskDTO {
         this.userCode = entity.getUserCode();
         this.language = entity.getLanguage();
         this.expectedOutput = entity.getExpectedOutput();
+        if (entity.getLesson() != null) {
+            var section = entity.getLesson().getSection();
+            if (section != null) {
+                this.moduleName = section.getTitle();
+                if (section.getCourse() != null) {
+                    this.courseName = section.getCourse().getTitle();
+                }
+            }
+        }
     }
 
     // Getters and Setters
@@ -64,4 +75,10 @@ public class KanbanTaskDTO {
 
     public String getExpectedOutput() { return expectedOutput; }
     public void setExpectedOutput(String expectedOutput) { this.expectedOutput = expectedOutput; }
+
+    public String getCourseName() { return courseName; }
+    public void setCourseName(String courseName) { this.courseName = courseName; }
+
+    public String getModuleName() { return moduleName; }
+    public void setModuleName(String moduleName) { this.moduleName = moduleName; }
 }

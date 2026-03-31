@@ -3,6 +3,7 @@ package com.bruno.lupito.dto;
 import com.bruno.lupito.entity.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class UserDTO {
@@ -23,7 +24,16 @@ public class UserDTO {
         private Integer currentStreak;
         private String city;
         private String state;
+        @Pattern(
+            regexp = "^https://github\\.com/[\\w.-]+(/[\\w./-]*)?$",
+            message = "URL do GitHub inválida. Use: https://github.com/seu-usuario"
+        )
         private String githubUrl;
+
+        @Pattern(
+            regexp = "^https://([a-zA-Z]{2,}\\.)?linkedin\\.com/(in|company)/[^\\s/]+(/[^\\s]*)?$",
+            message = "URL do LinkedIn inválida. Use: https://linkedin.com/in/seu-perfil"
+        )
         private String linkedinUrl;
 
 
