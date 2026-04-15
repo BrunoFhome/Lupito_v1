@@ -1,6 +1,5 @@
--- ── Usuários ──────────────────────────────────────────────────────────────────
 CREATE TABLE tb_users (
-    id               SERIAL PRIMARY KEY,
+    id               SERIAL       PRIMARY KEY,
     name             VARCHAR(255) NOT NULL,
     email            VARCHAR(255) NOT NULL UNIQUE,
     password         VARCHAR(255) NOT NULL,
@@ -10,10 +9,12 @@ CREATE TABLE tb_users (
     current_streak   INTEGER      NOT NULL DEFAULT 0,
     last_study_date  DATE,
     city             VARCHAR(100),
-    state            VARCHAR(2)
+    state            VARCHAR(2),
+    email_verified   BOOLEAN      NOT NULL DEFAULT FALSE,
+    github_url       VARCHAR(255),
+    linkedin_url     VARCHAR(255)
 );
 
--- ── Tokens de redefinição de senha ────────────────────────────────────────────
 CREATE TABLE password_reset_tokens (
     id         BIGSERIAL    PRIMARY KEY,
     token      VARCHAR(255) NOT NULL UNIQUE,
@@ -22,14 +23,20 @@ CREATE TABLE password_reset_tokens (
     used       BOOLEAN      NOT NULL DEFAULT FALSE
 );
 
--- ── Cursos ────────────────────────────────────────────────────────────────────
+CREATE TABLE email_verification_tokens (
+    id         BIGSERIAL    PRIMARY KEY,
+    token      VARCHAR(255) NOT NULL UNIQUE,
+    user_id    BIGINT       NOT NULL REFERENCES tb_users(id) ON DELETE CASCADE,
+    expires_at TIMESTAMP    NOT NULL,
+    used       BOOLEAN      NOT NULL DEFAULT FALSE
+);
+
 CREATE TABLE tb_courses (
     id          BIGSERIAL    PRIMARY KEY,
     title       VARCHAR(255) NOT NULL,
     description TEXT
 );
 
--- ── Seções ────────────────────────────────────────────────────────────────────
 CREATE TABLE tb_sections (
     id         BIGSERIAL    PRIMARY KEY,
     title      VARCHAR(255) NOT NULL,
@@ -38,7 +45,6 @@ CREATE TABLE tb_sections (
     CONSTRAINT fk_section_course FOREIGN KEY (course_id) REFERENCES tb_courses(id) ON DELETE CASCADE
 );
 
--- ── Lições ────────────────────────────────────────────────────────────────────
 CREATE TABLE tb_lessons (
     id             BIGSERIAL    PRIMARY KEY,
     title          VARCHAR(255) NOT NULL,
@@ -50,23 +56,21 @@ CREATE TABLE tb_lessons (
     CONSTRAINT fk_lesson_section FOREIGN KEY (section_id) REFERENCES tb_sections(id) ON DELETE CASCADE
 );
 
--- ── Exercícios ────────────────────────────────────────────────────────────────
 CREATE TABLE tb_exercises (
-    id             BIGSERIAL PRIMARY KEY,
-    question       TEXT      NOT NULL,
-    correct_answer INTEGER   NOT NULL,
-    lesson_id      BIGINT    NOT NULL,
+    id             BIGSERIAL   PRIMARY KEY,
+    question       TEXT        NOT NULL,
+    correct_answer INTEGER     NOT NULL,
+    type           VARCHAR(30) NOT NULL DEFAULT 'multiple-choice',
+    lesson_id      BIGINT      NOT NULL,
     CONSTRAINT fk_exercise_lesson FOREIGN KEY (lesson_id) REFERENCES tb_lessons(id) ON DELETE CASCADE
 );
 
--- ── Opções dos exercícios ─────────────────────────────────────────────────────
 CREATE TABLE tb_exercises_options (
     exercise_id BIGINT       NOT NULL,
     options     VARCHAR(255),
     CONSTRAINT fk_exercise_options FOREIGN KEY (exercise_id) REFERENCES tb_exercises(id) ON DELETE CASCADE
 );
 
--- ── Progresso do usuário ──────────────────────────────────────────────────────
 CREATE TABLE tb_user_progress (
     id                    BIGSERIAL PRIMARY KEY,
     user_id               INTEGER   NOT NULL,
@@ -78,7 +82,16 @@ CREATE TABLE tb_user_progress (
     CONSTRAINT uq_user_course     UNIQUE (user_id, course_id)
 );
 
--- ── Templates de Kanban ───────────────────────────────────────────────────────
+CREATE TABLE tb_study_activity (
+    id           BIGSERIAL PRIMARY KEY,
+    user_id      BIGINT    NOT NULL REFERENCES tb_users(id) ON DELETE CASCADE,
+    study_date   DATE      NOT NULL,
+    lessons_done INTEGER   NOT NULL DEFAULT 1,
+    CONSTRAINT uq_user_study_date UNIQUE (user_id, study_date)
+);
+
+CREATE INDEX idx_study_activity_user_date ON tb_study_activity (user_id, study_date);
+
 CREATE TABLE tb_kanban_templates (
     id                     BIGSERIAL    PRIMARY KEY,
     title                  VARCHAR(255) NOT NULL,
@@ -92,7 +105,6 @@ CREATE TABLE tb_kanban_templates (
     CONSTRAINT fk_template_lesson FOREIGN KEY (lesson_id) REFERENCES tb_lessons(id) ON DELETE CASCADE
 );
 
--- ── Tarefas de Kanban ─────────────────────────────────────────────────────────
 CREATE TABLE tb_kanban_tasks (
     id                     BIGSERIAL    PRIMARY KEY,
     title                  VARCHAR(255) NOT NULL,

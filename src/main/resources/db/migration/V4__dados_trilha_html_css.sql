@@ -1,7 +1,3 @@
--- ════════════════════════════════════════════════════════════════════════════
--- TRILHA HTML+CSS — SEÇÕES (15 módulos, IDs 13–27)
--- ════════════════════════════════════════════════════════════════════════════
-
 INSERT INTO tb_sections (id, title, list_order, course_id) VALUES
 (13, 'Introdução ao HTML',              1,  2),
 (14, 'Estrutura Base do Documento',     2,  2),
@@ -19,11 +15,7 @@ INSERT INTO tb_sections (id, title, list_order, course_id) VALUES
 (26, 'Listas e Tabelas com CSS',        14, 2),
 (27, 'Alinhamento e Layout',            15, 2);
 
--- ════════════════════════════════════════════════════════════════════════════
--- TRILHA HTML+CSS — LIÇÕES (IDs 37–81, 3 por seção)
--- ════════════════════════════════════════════════════════════════════════════
 
--- ── Seção 13: Introdução ao HTML ─────────────────────────────────────────────
 INSERT INTO tb_lessons (id, title, theory_content, code_example, code_language, list_order, section_id) VALUES
 (37, 'O que é HTML',
 $t$<p>HTML significa <strong>HyperText Markup Language</strong> — linguagem de marcação de hipertexto.</p>
@@ -74,7 +66,7 @@ $code$<!-- Salve este conteúdo como index.html e abra no navegador -->
 </html>$code$,
 'html', 3, 13);
 
--- ── Seção 14: Estrutura Base do Documento ────────────────────────────────────
+
 INSERT INTO tb_lessons (id, title, theory_content, code_example, code_language, list_order, section_id) VALUES
 (40, 'DOCTYPE e a tag html',
 $t$<p>Todo arquivo HTML começa com <code>&lt;!DOCTYPE html&gt;</code>. Isso diz ao navegador: "este é um documento HTML5".</p>
@@ -2027,4 +2019,5 @@ $code$,
 SELECT setval('tb_sections_id_seq',         27, true);
 SELECT setval('tb_lessons_id_seq',          81, true);
 SELECT setval('tb_exercises_id_seq',        81, true);
+SELECT setval('tb_kanban_templates_id_seq', 27, true);
 SELECT setval('tb_kanban_templates_id_seq', 27, true);

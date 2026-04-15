@@ -1,15 +1,3 @@
--- ════════════════════════════════════════════════════════════════════════════
--- CURSOS
--- ════════════════════════════════════════════════════════════════════════════
-
-INSERT INTO tb_courses (id, title, description) VALUES
-(1, 'JavaScript', 'Aprenda JavaScript do zero: variáveis, funções, DOM e eventos. 12 módulos para quem nunca programou.'),
-(2, 'HTML e CSS',  'Crie páginas web do zero com HTML e CSS. 15 módulos do básico ao layout completo.');
-
--- ════════════════════════════════════════════════════════════════════════════
--- TRILHA JS — SEÇÕES (12 módulos)
--- ════════════════════════════════════════════════════════════════════════════
-
 INSERT INTO tb_sections (id, title, list_order, course_id) VALUES
 (1,  'Introdução ao JavaScript',       1,  1),
 (2,  'Como usar JS no HTML',           2,  1),
@@ -24,13 +12,7 @@ INSERT INTO tb_sections (id, title, list_order, course_id) VALUES
 (11, 'DOM',                            11, 1),
 (12, 'Eventos',                        12, 1);
 
--- ════════════════════════════════════════════════════════════════════════════
--- TRILHA JS — LIÇÕES
--- Cada seção tem 3 aulas (list_order 1, 2, 3)
--- IDs 1–36
--- ════════════════════════════════════════════════════════════════════════════
 
--- ── Seção 1: Introdução ao JavaScript ────────────────────────────────────────
 INSERT INTO tb_lessons (id, title, theory_content, code_example, code_language, list_order, section_id) VALUES
 (1, 'O que é JavaScript',
 $t$<p>JavaScript é a linguagem de programação da web. Ela roda diretamente no navegador, sem precisar instalar nada.</p>
@@ -78,7 +60,6 @@ console.log("Linha 2");
 console.log("Linha 3");$code$,
 'javascript', 3, 1);
 
--- ── Seção 2: Como usar JS no HTML ────────────────────────────────────────────
 INSERT INTO tb_lessons (id, title, theory_content, code_example, code_language, list_order, section_id) VALUES
 (4, 'Script na página',
 $t$<p>Para adicionar JavaScript em uma página HTML, usamos a tag <code>&lt;script&gt;</code>.</p>
@@ -138,7 +119,7 @@ $code$<!DOCTYPE html>
 </html>$code$,
 'html', 3, 2);
 
--- ── Seção 3: Saída de Dados ───────────────────────────────────────────────────
+
 INSERT INTO tb_lessons (id, title, theory_content, code_example, code_language, list_order, section_id) VALUES
 (7, 'console.log',
 $t$<p><code>console.log()</code> é a função mais usada para exibir informações durante o desenvolvimento.</p>
@@ -189,7 +170,7 @@ elemento.innerHTML = "<strong>Texto em negrito!</strong>";
 elemento.textContent = "Apenas texto, sem HTML";$code$,
 'javascript', 3, 3);
 
--- ── Seção 4: Sintaxe ──────────────────────────────────────────────────────────
+
 INSERT INTO tb_lessons (id, title, theory_content, code_example, code_language, list_order, section_id) VALUES
 (10, 'Case-sensitivity e ponto e vírgula',
 $t$<p>JavaScript é <strong>case-sensitive</strong>: isso significa que letras maiúsculas e minúsculas fazem diferença.</p>
@@ -253,7 +234,7 @@ let returnValue = 42;
 console.log(nome, minhaIdade);$code$,
 'javascript', 3, 4);
 
--- ── Seção 5: Variáveis ────────────────────────────────────────────────────────
+
 INSERT INTO tb_lessons (id, title, theory_content, code_example, code_language, list_order, section_id) VALUES
 (13, 'var, let e const',
 $t$<p>Existem três formas de declarar variáveis em JavaScript:</p>
@@ -328,7 +309,7 @@ let emailAddress = "joao@email.com";
 console.log(nomeCompleto, idadeDoUsuario);$code$,
 'javascript', 3, 5);
 
--- ── Seção 6: Tipos de Dados ───────────────────────────────────────────────────
+
 INSERT INTO tb_lessons (id, title, theory_content, code_example, code_language, list_order, section_id) VALUES
 (16, 'String e Number',
 $t$<p><strong>String</strong> representa texto. Deve estar entre aspas simples, duplas ou crases:</p>
@@ -1359,8 +1340,8 @@ $code$,
 -- ════════════════════════════════════════════════════════════════════════════
 -- Atualizar sequences após inserts com IDs explícitos
 -- ════════════════════════════════════════════════════════════════════════════
-SELECT setval('tb_courses_id_seq',           2,  true);
 SELECT setval('tb_sections_id_seq',          12, true);
 SELECT setval('tb_lessons_id_seq',           36, true);
 SELECT setval('tb_exercises_id_seq',         36, true);
 SELECT setval('tb_kanban_templates_id_seq',  12, true);
+SELECT setval('tb_kanban_templates_id_seq', 12, true);
