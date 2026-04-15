@@ -27,9 +27,7 @@ public class TokenConfig {
 			return JWT.create()
 					.withIssuer("Lupito")
 					.withClaim("userId", user.getId())
-					.withSubject(user.getName()) // Using Name as Subject might differ from Email used elsewhere? Usually Subject is username/email
-					// Wait, let's keep it consistent. Start with Email as Subject if that's what we want.
-					// Original code: .withSubject(user.getEmail())
+					.withSubject(user.getName())
 					.withSubject(user.getEmail())
 					.withExpiresAt(Instant.now().plusSeconds(86400))
 					.withIssuedAt(Instant.now())

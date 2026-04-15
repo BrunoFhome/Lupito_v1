@@ -21,10 +21,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/**
- * Filtro de rate limiting por IP para endpoints sensíveis de autenticação.
- * Usa sliding window em memória — sem dependências externas.
- */
+
 @Component
 public class RateLimitFilter extends OncePerRequestFilter {
 
