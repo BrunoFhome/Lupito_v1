@@ -69,7 +69,7 @@ public class KanbanService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado"));
         syncTasksForUser(user);
-
+ 
         return taskRepository.findByUserId(userId).stream()
                 .map(KanbanTaskDTO::new)
                 .collect(Collectors.toList());
@@ -77,7 +77,7 @@ public class KanbanService {
 
     @Transactional
     public void unlockTaskForLesson(Long userId, Long lessonId) {
-        // Redundant explicit unlock via route can still work
+        
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado"));
         syncTasksForUser(user);
