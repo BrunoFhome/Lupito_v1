@@ -20,6 +20,7 @@ import com.bruno.lupito.config.JWTUserData;
 import com.bruno.lupito.controller.exception.AcessoNegadoException;
 import com.bruno.lupito.dto.ActivityDayDTO;
 import com.bruno.lupito.dto.UserDTO;
+import com.bruno.lupito.dto.request.UpdateAccountRequest;
 import com.bruno.lupito.services.UserService;
 import jakarta.validation.Valid;
 
@@ -53,6 +54,13 @@ public class UserController {
 	public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserDTO dto) {
 		verificarPropriedade(id);
 		dto = service.update(dto, id);
+		return ResponseEntity.ok(dto);
+	}
+
+	@PutMapping(value = "/{id}/account")
+	public ResponseEntity<UserDTO> updateAccount(@PathVariable Long id, @Valid @RequestBody UpdateAccountRequest request) {
+		verificarPropriedade(id);
+		UserDTO dto = service.updateAccount(request, id);
 		return ResponseEntity.ok(dto);
 	}
 
