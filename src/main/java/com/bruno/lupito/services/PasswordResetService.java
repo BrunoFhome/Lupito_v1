@@ -5,8 +5,6 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,16 +25,13 @@ public class PasswordResetService {
     private PasswordResetTokenRepository tokenRepository;
 
     @Autowired
-    private JavaMailSender mailSender;
+    private BrevoEmailService emailService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Value("${app.frontend.url:http://localhost:4200}")
     private String frontendUrl;
-
-    @Value("${spring.mail.username}")
-    private String fromEmail;
 
     @Transactional
     public void sendResetEmail(String email) {
@@ -57,19 +52,16 @@ public class PasswordResetService {
 
         String resetLink = frontendUrl + "/reset-password?token=" + token;
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(fromEmail);
-        message.setTo(email);
-        message.setSubject("Lupito — Recuperação de senha");
-        message.setText(
+        String subject = "Lupito — Recuperação de senha";
+        String text =
                 "Olá, " + user.getName() + "!\n\n" +
                 "Recebemos uma solicitação para redefinir sua senha.\n\n" +
                 "Clique no link abaixo para criar uma nova senha (válido por 1 hora):\n" +
                 resetLink + "\n\n" +
                 "Se você não solicitou isso, ignore este email.\n\n" +
-                "Equipe Lupito"
-        );
-        mailSender.send(message);
+                "Equipe Lupito";
+
+        emailService.sendText(email, user.getName(), subject, text);
     }
 
     @Transactional
