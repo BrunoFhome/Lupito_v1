@@ -1,5 +1,6 @@
 package com.bruno.lupito.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -29,6 +30,10 @@ import jakarta.servlet.DispatcherType;
 public class SecurityConfig {
 
     private final SecurityFilter securityFilter;
+
+    // Origens permitidas no CORS, vindas de app.frontend.url (env FRONTEND_URL). Aceita varias separadas por virgula.
+    @Value("${app.frontend.url:http://localhost:4200}")
+    private String frontendUrl;
 
     SecurityConfig(SecurityFilter securityFilter) {
         this.securityFilter = securityFilter;
@@ -80,7 +85,7 @@ public class SecurityConfig {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+		configuration.setAllowedOrigins(Arrays.asList(frontendUrl.split(",")));
 		configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
 		configuration.setAllowedHeaders(List.of("*"));
 		configuration.setAllowCredentials(true);
