@@ -5,8 +5,6 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,13 +24,10 @@ public class EmailVerificationService {
     private EmailVerificationTokenRepository tokenRepository;
 
     @Autowired
-    private JavaMailSender mailSender;
+    private BrevoEmailService emailService;
 
     @Value("${app.frontend.url:http://localhost:4200}")
     private String frontendUrl;
-
-    @Value("${spring.mail.username}")
-    private String fromEmail;
 
     @Transactional
     public void sendVerificationEmail(User user) {
@@ -47,19 +42,16 @@ public class EmailVerificationService {
 
         String verificationLink = frontendUrl + "/verify-email?token=" + token;
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(fromEmail);
-        message.setTo(user.getEmail());
-        message.setSubject("Lupito — Verifique seu e-mail");
-        message.setText(
+        String subject = "Lupito — Verifique seu e-mail";
+        String text =
                 "Olá, " + user.getName() + "!\n\n" +
                 "Obrigado por se cadastrar na plataforma Lupito.\n\n" +
                 "Clique no link abaixo para verificar seu e-mail e ativar sua conta (válido por 24 horas):\n" +
                 verificationLink + "\n\n" +
                 "Se você não criou uma conta, ignore este e-mail.\n\n" +
-                "Equipe Lupito"
-        );
-        mailSender.send(message);
+                "Equipe Lupito";
+
+        emailService.sendText(user.getEmail(), user.getName(), subject, text);
     }
 
     @Transactional
