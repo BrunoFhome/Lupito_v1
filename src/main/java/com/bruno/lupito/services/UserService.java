@@ -6,12 +6,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bruno.lupito.controller.exception.ConflitoDeDadosException;
 import com.bruno.lupito.controller.exception.RecursoNaoEncontradoException;
 import com.bruno.lupito.dto.ActivityDayDTO;
 import com.bruno.lupito.dto.UserDTO;
+import com.bruno.lupito.dto.request.UpdateAccountRequest;
 import com.bruno.lupito.entity.StudyActivity;
 import com.bruno.lupito.entity.User;
 import com.bruno.lupito.repository.StudyActivityRepository;
@@ -21,12 +24,15 @@ import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	UserRepository repository;
 
 	@Autowired
 	StudyActivityRepository studyActivityRepository;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	@Transactional(readOnly = true)
 	public UserDTO findById(Long id) {
@@ -49,6 +55,31 @@ public class UserService {
 		
 	}
 	
+	@Transactional
+	public UserDTO updateAccount(UpdateAccountRequest request, Long id) {
+		User entity = repository.findById(id)
+				.orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado"));
+
+		String novoEmail = request.email().trim();
+		if (!novoEmail.equalsIgnoreCase(entity.getEmail())) {
+			repository.findByEmail(novoEmail).ifPresent(outro -> {
+				if (!outro.getId().equals(id)) {
+					throw new ConflitoDeDadosException("Este e-mail já está cadastrado.");
+				}
+			});
+		}
+
+		entity.setName(request.name().trim());
+		entity.setEmail(novoEmail);
+
+		if (request.password() != null && !request.password().isBlank()) {
+			entity.setPassword(passwordEncoder.encode(request.password()));
+		}
+
+		entity = repository.save(entity);
+		return new UserDTO(entity);
+	}
+
 	@Transactional
 	public void delete(Long id) {
 		if (!repository.existsById(id)) {

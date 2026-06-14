@@ -24,7 +24,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // ── Exceções de domínio personalizadas ──────────────────────────────────
+    //  Exceções de domínio personalizadas 
 
     @ExceptionHandler(RecursoNaoEncontradoException.class)
     public ResponseEntity<ErroResposta> handleRecursoNaoEncontrado(RecursoNaoEncontradoException ex) {
@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
                 .body(new ErroResposta(401, "Token inválido", ex.getMessage()));
     }
 
-    // ── Autenticação e autorização (Spring Security) ─────────────────────────
+    //  Autenticação e autorização (Spring Security)
 
     @ExceptionHandler({ BadCredentialsException.class, InternalAuthenticationServiceException.class })
     public ResponseEntity<ErroResposta> handleCredenciaisInvalidas(RuntimeException ex) {
@@ -83,7 +83,7 @@ public class GlobalExceptionHandler {
                 .body(new ErroResposta(403, "Acesso negado", "Você não tem permissão para realizar esta ação."));
     }
 
-    // ── Validação de campos (@Valid / @Validated) ─────────────────────────────
+    // Validação de campos (@Valid / @Validated)
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErroResposta> handleValidacaoCampos(MethodArgumentNotValidException ex) {
@@ -122,7 +122,7 @@ public class GlobalExceptionHandler {
                         "Valor inválido para '" + ex.getName() + "'. Tipo esperado: " + tipo + "."));
     }
 
-    // ── Erros de protocolo HTTP ───────────────────────────────────────────────
+    // Erros de protocolo HTTP 
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErroResposta> handleCorpoInvalido(HttpMessageNotReadableException ex) {
@@ -145,7 +145,7 @@ public class GlobalExceptionHandler {
                         "Use 'application/json' no cabeçalho Content-Type."));
     }
 
-    // ── Erros de banco de dados ───────────────────────────────────────────────
+    // Erros de banco de dados
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErroResposta> handleViolacaoIntegridade(DataIntegrityViolationException ex) {
@@ -157,7 +157,7 @@ public class GlobalExceptionHandler {
                 .body(new ErroResposta(409, "Conflito de dados", mensagem));
     }
 
-    // ── Fallback genérico ─────────────────────────────────────────────────────
+    // Fallback genérico
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErroResposta> handleErroGenerico(Exception ex) {

@@ -76,10 +76,10 @@ public class UserProgressService {
                 .orElse(1);
 
         if (currentLessonOrder < maxLessonOrder) {
-            // Advance to next lesson in the same section
+            // avança para a próxima aula dentro da mesma seção
             progress.setCurrentLessonOrder(currentLessonOrder + 1);
         } else {
-            // Advance to the next section, reset lesson to first
+            // avança para a próxima seção
             List<Section> sections = sectionRepository.findByCourseIdOrderByListOrderAsc(courseId);
             int maxSectionOrder = sections.stream()
                     .mapToInt(Section::getListOrder)

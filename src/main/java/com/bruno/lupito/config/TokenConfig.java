@@ -54,7 +54,7 @@ public class TokenConfig {
 					.build());
 			
 		} catch (JWTVerificationException e) {
-			// e.printStackTrace(); // Helpful for debugging
+			// e.printStackTrace();
 			return Optional.empty();
 		}
 		
